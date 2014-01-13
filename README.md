@@ -1,4 +1,5 @@
-luxtrubuk
+LUXTRUBUK
 =========
+LUXTRUBUK is a Jeopardy!™ simulator for good buds.
 
-Let LUXTRUBUK host a game of Jeopardy! for you and your pals
+### This is in no way affiliated with Sony Pictures, Jeopardy!™, or any other related entity
