@@ -1,0 +1,30 @@
+{
+  "name": "LUXTRUBUK",
+  "version": "0.0.0",
+  "description": "LUXTRUBUK lets good buds simulate Jeopardy",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jjt/LUXTRUBUK.git"
+  },
+  "author": "Jason Trill <jason@jasontrill.com> (http://jjt.io/)",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/jjt/LUXTRUBUK/issues"
+  },
+  "homepage": "https://github.com/jjt/LUXTRUBUK",
+  "dependencies": {
+    "express": "~3.4.7",
+    "pg": "~2.11.0"
+  },
+  "devDependencies": {
+    "gulp-util": "~2.2.9",
+    "gulp-coffee": "~1.2.5",
+    "gulp-load-tasks": "~0.1.1",
+    "gulp": "~3.3.1",
+    "gulp-browserify": "~0.2.4"
+  }
+}
