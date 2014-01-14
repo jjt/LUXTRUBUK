@@ -1,0 +1,23 @@
+{
+  "name": "LUXTRUBUK",
+  "version": "0.0.0",
+  "homepage": "https://github.com/jjt/LUXTRUBUK",
+  "authors": [
+    "jjt <jason@jasontrill.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "react": "~0.8.0",
+    "director": "~1.2.2",
+    "zepto": "~1.1.2"
+  }
+}

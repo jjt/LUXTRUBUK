@@ -6,9 +6,15 @@ api = require('./lib/api');
 
 app = express();
 
-app.get('/api/game/new', function(req, res) {
+app.get('/api/game/randomHash', function(req, res) {
   return api.getRandomGameHash(null, function(err, hash) {
-    return res.redirect("/game/" + hash);
+    return res.send(hash);
+  });
+});
+
+app.get('/api/game/random', function(req, res) {
+  return api.getRandomGameHash(null, function(err, hash) {
+    return res.redirect("/api/game/" + hash);
   });
 });
 

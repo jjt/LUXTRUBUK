@@ -25,6 +25,10 @@
     "gulp-coffee": "~1.2.5",
     "gulp-load-tasks": "~0.1.1",
     "gulp": "~3.3.1",
-    "gulp-browserify": "~0.2.4"
+    "gulp-browserify": "~0.2.5",
+    "gulp-nodemon": "~0.1.1",
+    "gulp-jade": "~0.3.0",
+    "gulp-react": "~0.1.0",
+    "gulp-concat": "~2.1.7"
   }
 }
