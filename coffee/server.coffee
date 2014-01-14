@@ -1,11 +1,15 @@
 express = require 'express'
-getClues = require './lib/getClues'
+api = require './lib/api'
 
 app = express()
 
-app.get '/', (req, res) ->
-  getClues.getRandomGame (result)->
-    res.send JSON.stringify result
+app.get '/api/game/new', (req, res) ->
+  api.getRandomGameHash null, (err, hash)->
+    res.redirect "/game/#{hash}"
+
+app.get '/api/game/:gamehash', (req, res) ->
+  api.getGame null, req.params.gamehash, (err, game) ->
+    res.send JSON.stringify game
 
 app.listen 3000
 console.log 'LUXTRUBUK UP IN IT!'
