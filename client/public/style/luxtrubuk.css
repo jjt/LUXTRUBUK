@@ -404,7 +404,12 @@ h1, h2, h3, h4 {
 
 
 .newGame {
-  font-size: 1.2rem; }
+  font-size: 1.2rem;
+  margin: 0 auto; }
+
+.newGameRow {
+  padding-top: 3rem;
+  text-align: center; }
 
 .GameGrid {
   margin: 0 auto; }
@@ -412,11 +417,7 @@ h1, h2, h3, h4 {
 .gameBlock, .Category--title, .Clue--holder {
   height: 5rem;
   padding: 0.2rem;
-  color: white;
-  border-right: 1px solid #124566;
-  border-bottom: 1px solid #124566;
-  border-top: 1px solid #195f8d;
-  border-left: 1px solid #195f8d; }
+  color: white; }
 
 .Category {
   -webkit-box-flex: 1;
@@ -434,12 +435,16 @@ h1, h2, h3, h4 {
     display: inline-block; }
 
 .Clue--holder {
-  background: #16537c; }
+  background: #16537c;
+  color: #ffe000; }
+  .Clue--holder:hover {
+    cursor: pointer;
+    color: #16537c;
+    background: #ffe000; }
 
 .Value {
   font-size: 2.6rem;
-  display: inline-block;
-  color: #ffe000; }
+  display: inline-block; }
   .Value.fourDigit {
     font-size: 2.2rem; }
 
