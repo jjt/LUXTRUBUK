@@ -18,6 +18,10 @@
   "dependencies": {
     "react": "~0.8.0",
     "director": "~1.2.2",
-    "zepto": "~1.1.2"
+    "zepto": "~1.1.2",
+    "lodash": "~2.4.1",
+    "normalize-scss": "~2.1.3",
+    "sass-flex-mixin": "https://github.com/mastastealth/sass-flex-mixin.git",
+    "solarized": "~0.1.2"
   }
 }

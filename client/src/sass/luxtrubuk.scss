@@ -1,0 +1,116 @@
+@import "normalize-scss/normalize";
+@import "bourbon/bourbon";
+@import "flexutils";
+@import "sass-flex-mixin/flex";
+@import "solarized/scss/solarized";
+
+$blue: darken($solarized-blue, 20%);
+$yellow: #ffe000;
+
+html {
+  height: 100%;
+}
+
+body {
+  background: $blue;
+  color:$yellow;
+  height:100%;
+}
+
+a {
+  color:lighten($solarized-magenta,10%);
+  text-decoration:none;
+}
+
+
+h1,h2,h3,h4 {
+  font-weight:normal;
+}
+
+.buttonMagenta {
+  background: $solarized-magenta;
+  padding:0.4em 1em;
+  display:inline-block;
+  color:rgba(255,255,255,0.8);
+}
+
+
+.siteWide {
+  max-width:50rem;
+  margin:0 auto;
+}
+
+
+#app {
+  @extend .siteWide;
+}
+
+.newGame {
+  @extend .buttonMagenta;
+  font-size:1.2rem;
+}
+
+.GameGrid {
+  @extend %flexbox;
+  margin:0 auto;
+}
+
+.gameBlock {
+  //@include radial-gradient(circle at 0 0, #3b3ef7, #151EA2);
+  height:5rem;
+  padding:0.2rem;
+  color:white;
+  border-right:1px solid darken($blue, 5%);
+  border-bottom:1px solid darken($blue, 5%);
+  border-top:1px solid lighten($blue, 4%);
+  border-left:1px solid lighten($blue, 4%);
+}
+
+.Category {
+  @include flex(1);
+  background:black;
+}
+
+.Category--title {
+  @extend %flexbox;
+  @extend .gameBlock;
+  @extend %flex-center-text;
+  color: lighten($blue, 60%);
+  background:$blue;
+  h4 {
+    display:inline-block;
+  }
+}
+
+.Clue--holder {
+  @extend %flexbox;
+  @extend .gameBlock;  
+  @extend %flex-center-text;
+  background:$blue;
+}
+
+.Value {
+  font-size:2.6rem;
+  display: inline-block;
+  color: $yellow;
+  &.fourDigit {
+    font-size:2.2rem;
+  }
+}
+
+
+.siteHeader {
+  text-align:center;
+  .headerBlock {
+    background:$blue;
+    display:inline-block;
+  }
+  h1 {
+    font-size:3rem;
+    font-weight:normal;
+    a {
+      color:$yellow;
+      text-decoration: none;
+    }
+  }
+}

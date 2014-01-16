@@ -2,15 +2,32 @@
 Zepto(function(){
   var Luxtrubuk = require('./luxtrubuk.js');
   var $app = document.getElementById('app');
+  
+  // Gets the game from localStorage if available, otherwise makes an xhr req
+  // If it has to make an xhr req, save the game locally
+  var getGame = function(gamehash, next) {
+    var gameKey = 'game-' + gamehash,
+      localGame = localStorage.getItem(gameKey);
+    
+    if(localGame)
+      return next(JSON.parse(localGame));
+
+    $.getJSON('/api/game/' + gamehash, function(data){
+      localStorage.setItem('game-'+gamehash, JSON.stringify(data));
+      next(data);
+    });
+  }
+
   // Routes
   var game = function(gamehash) {
-    $.ajax({
-      url: '/api/game/' + gamehash
-    });
-    React.renderComponent(
-      Luxtrubuk(null ),
-      $app
-    );
+    console.log('GAME ', gamehash);
+    getGame(gamehash, function(data){
+      console.log(data);
+      React.renderComponent(
+        Luxtrubuk( {clues:data}),
+        $app
+      );
+    })
   }
 
   var newGame = function() {
@@ -19,7 +36,7 @@ Zepto(function(){
       url: '/api/game/randomHash',
       success: function(data){
         console.log("New game success!", data);
-        router("#/game/" + data, 'Game #'+data);
+        router("#/game/" + data, 'Game #' +data);
       }
     }); 
   }
@@ -49,7 +66,6 @@ Zepto(function(){
   }
 
   // Wire up events for all [data-route] elements
-  console.log($('[data-route]'));
   $('[data-route]').on('click', function (ev) {
     router(this.hash);
   });

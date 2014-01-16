@@ -2,15 +2,22 @@
 <html>
 <head>
   <title>LUXTRUBUK</title>
-  
+  <link rel="stylesheet" href="/style/luxtrubuk.css" type="text/css" media="all" />  
 </head>
 <body>
+  <header class="siteHeader">
+    <div class="headerBlock">
+      <h1><a href="/">LUXTRUBUK</a></h1>
+      
+    </div>
+  </header>
   <div id="app">
-    <h1>LUXTRUBUK is a JEOPARDY!&trade; simulator for good buds</h1>
-    <a href="#/game/new" data-route>New Game</a>
+    <h1>LUXTRUBUK is a JEOPARDY!&trade; simulator for good buds, played locally in your browser.</h1>
+    <a href="#/game/new" data-route class="newGame">New Game</a>
   </div>
+  <script src="/bower_components/lodash/dist/lodash.js"></script>
   <script src="/bower_components/zepto/zepto.js"></script>
-  <script src="/bower_components/react/react.js"></script>
+  <script src="/bower_components/react/react-with-addons.js"></script>
   <script src="/script/index.js"></script>
 </body>
 </html>

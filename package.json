@@ -29,6 +29,10 @@
     "gulp-nodemon": "~0.1.1",
     "gulp-jade": "~0.3.0",
     "gulp-react": "~0.1.0",
-    "gulp-concat": "~2.1.7"
+    "gulp-concat": "~2.1.7",
+    "lodash": "~2.4.1",
+    "chalk": "~0.4.0",
+    "node-bourbon": "~1.0.0",
+    "gulp-sass": "~0.4.0"
   }
 }
