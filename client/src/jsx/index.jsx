@@ -2,23 +2,17 @@
 Zepto(function(){
   var Luxtrubuk = require('./luxtrubuk.js');
   var $app = document.getElementById('app');
-  
-  // Gets the game from localStorage if available, otherwise makes an xhr req
-  // If it has to make an xhr req, save the game locally
-  var getGame = function(gamehash, next) {
-    var gameKey = 'game-' + gamehash,
-      localGame = localStorage.getItem(gameKey);
-    
-    if(localGame)
-      return next(JSON.parse(localGame));
-
-    $.getJSON('/api/game/' + gamehash, function(data){
-      localStorage.setItem('game-'+gamehash, JSON.stringify(data));
-      next(data);
-    });
-  }
+  var game = require('../../../lib/game.js');  
 
   // Routes
+  var home = function() {
+    $app.innerHTML = ['<h1>LUXTRUBUK lets good pals simulate JEOPARDY!&trade; games locally in a modern browser.</h1>'
+      ,'<div class="newGameRow">'
+      ,'<a href="#/game/new" data-route class="newGame">New Game</a>'
+      ,'</div>'
+    ].join('')
+  }
+
   var game = function(gamehash) {
     console.log('GAME ', gamehash);
     getGame(gamehash, function(data){
@@ -55,8 +49,8 @@ Zepto(function(){
         window.location.hash = wlh;
     }
     var hash = wlh.replace('#','');
-    if(hash == '')
-      return;
+    if(hash == '' || hash == '/')
+      return home();
     if(hash === '/game/new')
       return newGame()
     var gameHash = hash.match(/\/game\/(\w*)/)

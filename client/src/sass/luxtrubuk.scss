@@ -1,11 +1,19 @@
 @import "normalize-scss/normalize";
 @import "bourbon/bourbon";
-@import "flexutils";
+//@import "flexutils";
 @import "sass-flex-mixin/flex";
 @import "solarized/scss/solarized";
 
 $blue: darken($solarized-blue, 20%);
 $yellow: #ffe000;
+
+
+%flexCenter {
+  justify-content: center;
+  align-items: center;
+  text-align:center;
+}
+
 
 html {
   height: 100%;
@@ -13,12 +21,12 @@ html {
 
 body {
   background: $blue;
-  color:$yellow;
+  color:rgba(#ffffff, 0.8);
   height:100%;
 }
 
 a {
-  color:lighten($solarized-magenta,10%);
+  color:$yellow;
   text-decoration:none;
 }
 
@@ -27,13 +35,25 @@ h1,h2,h3,h4 {
   font-weight:normal;
 }
 
-.buttonMagenta {
-  background: $solarized-magenta;
-  padding:0.4em 1em;
-  display:inline-block;
-  color:rgba(255,255,255,0.8);
+h1,h2,h3 {
+  color:rgba(#fff, 0.6);
 }
 
+%btn {
+  padding:0.4em 1em;
+  display:inline-block;
+  border:1px solid $yellow;
+}
+
+%btn:hover{
+  background:$yellow;
+  color:$blue;
+}
+
+//.button:hover {
+  //background:$yellow;
+  //color:$blue;
+//}
 
 .siteWide {
   max-width:50rem;
@@ -46,7 +66,7 @@ h1,h2,h3,h4 {
 }
 
 .newGame {
-  @extend .buttonMagenta;
+  @extend %btn;
   font-size:1.2rem;
   margin:0 auto;
 }
@@ -59,6 +79,7 @@ h1,h2,h3,h4 {
 .GameGrid {
   @extend %flexbox;
   margin:0 auto;
+  background: $blue;
 }
 
 .gameBlock {
@@ -74,15 +95,15 @@ h1,h2,h3,h4 {
 
 .Category {
   @include flex(1);
-  background:black;
 }
 
 .Category--title {
   @extend %flexbox;
   @extend .gameBlock;
-  @extend %flex-center-text;
+  @extend %flexCenter;
   color: lighten($blue, 60%);
   background:$blue;
+  word-wrap: break-word;
   h4 {
     display:inline-block;
   }
@@ -91,7 +112,7 @@ h1,h2,h3,h4 {
 .Clue--holder {
   @extend %flexbox;
   @extend .gameBlock;  
-  @extend %flex-center-text;
+  @extend %flexCenter;
   background:$blue;
   color: $yellow;
   &:hover {

@@ -1,5 +1,6 @@
 /** @jsx React.DOM */
 
+
 var cx = React.addons.classSet;
 
 var log = function(){
@@ -13,26 +14,35 @@ var hexStr = function() {
 
 
 var Clue = React.createClass({
+  handleClick: function() {
+    console.log(this.props);
+    this.props.valueClick(this.props.row);
+  },
   render: function(){
-    var value = this.props.index * 200,
-      valueClasses = cx({
-        'Value': true,
-        'fourDigit': value/1000 >= 1
-      });
+    var value = this.props.row * this.props.round * 200,
+        valueClasses = cx({
+          'Value': true,
+          'fourDigit': value/1000 >= 1
+        });
     return(
-      <div className="Clue--holder">
-        <h4 className={valueClasses}>${this.props.index * 200}</h4>
+      <div className="Clue--holder" onClick={this.handleClick}>
+        <span className={valueClasses}>${value}</span>
       </div>
     )
   }
 });
 
 var Category = React.createClass({
+  valueClick: function(row) {
+  },
   render: function() {
+    console.log(this.props);
     var clueIndex = 1,
-      clueComponents = _.map(this.props.clues, function(clue) {
-        return (<Clue clue={clue} key={hexStr()} index={clueIndex++}/>);
-      });
+        column = this.props.column,
+        clueComponents = _.map(this.props.clues, function(clue) {
+          return (<Clue key={hexStr()} round={clue.round} row={clueIndex++}
+            column={column} valueClick={this.valueClick}/>);
+        });
     return(
       <div className="Category">
         <div className="Category--title">
@@ -55,10 +65,23 @@ var ClueDetail = React.createClass({
 });
 
 var Game = React.createClass({
+  getInitialState: function() {
+    return {
+      round: 1
+    }
+  },
+  getRoundClues: function() {
+    return this.props.clues[this.state.round - 1];
+  }, 
+  valueClick: function(row,col) {
+    console.log(row,col); 
+  },
   render: function() {
-    var categoryComponents = _.map(this.props.round, function(category) {
-        return (<Category clues={category} key={hexStr()} />);
-      });
+    var index = 1
+        categoryComponents = _.map(this.getRoundClues(), function(category) {
+          return (<Category clues={category} key={hexStr()} column={index++}
+            valueClick={this.valueClick}/>);
+        });
     console.log(categoryComponents);
     return(
       <div className="Game">
@@ -75,7 +98,6 @@ var Game = React.createClass({
 
 var Luxtrubuk = React.createClass({
   render: function() {
-    var round = 1;
     var clues = _.chain(this.props.clues)
       .groupBy(function(clue) {return clue.round})
       .map(function(round) {
@@ -88,7 +110,7 @@ var Luxtrubuk = React.createClass({
       .tap(log)
       .value();
     return(
-      <Game round={clues[round-1]} />
+      <Game clues={clues} />
     );
   }
 });

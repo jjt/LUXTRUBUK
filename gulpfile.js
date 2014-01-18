@@ -3,6 +3,7 @@ var gulp = require('gulp');
 var sass = require('gulp-sass');
 var chalk = require('chalk');
 var gutil = require('gulp-util');
+var mocha = require('gulp-mocha');
 var react = require('gulp-react');
 var coffee = require('gulp-coffee');
 var concat = require('gulp-concat');
@@ -58,6 +59,10 @@ gulp.task('server', function () {
     .on('error', error);
 });
 
+gulp.task('testClient', function() {
+  gulp.src('client/test/spec/*.js')
+    .pipe(mocha({reporter: 'dot', colors: false}).on('error', error));
+});	
 
 // RUN IT ALL
 gulp.task('default', function () {
@@ -70,13 +75,22 @@ gulp.task('default', function () {
   
   gulp.run('react');
 
+  gulp.watch('client/test/spec/*.js', function() {
+    gulp.run('testClient');
+  }); 
+
   gulp.watch('client/src/sass/**/*.scss', function() {
     gulp.run('sass')
   }); 
 
+  gulp.watch('client/lib/*.js', function() {
+    gulp.run('testClient') 
+  }); 
+
   gulp.watch('client/src/coffee/**/*.coffee', function () {
     gulp.run('coffeeClient');
-    gulp.run('browserify')
+    gulp.run('react');
+    gulp.run('browserify');
   });
   
   gulp.watch('server/src/coffee/**/*.coffee', function () {

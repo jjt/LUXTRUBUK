@@ -332,71 +332,69 @@ table {
   display: flex; }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .Category--title, .Clue--holder {
   justify-content: center;
   align-items: center;
   text-align: center; }
-
-.GameGrid, .Category--title, .Clue--holder {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-flex;
-  display: -ms-flexbox;
-  display: flex; }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 html {
   height: 100%; }
 
 body {
   background: #16537c;
-  color: #ffe000;
+  color: rgba(255, 255, 255, 0.8);
   height: 100%; }
 
 a {
-  color: #dc609e;
+  color: #ffe000;
   text-decoration: none; }
 
 h1, h2, h3, h4 {
   font-weight: normal; }
 
-.buttonMagenta, .newGame {
-  background: #d33682;
+h1, h2, h3 {
+  color: rgba(255, 255, 255, 0.6); }
+
+.newGame {
   padding: 0.4em 1em;
   display: inline-block;
-  color: rgba(255, 255, 255, 0.8); }
+  border: 1px solid #ffe000; }
+
+.newGame:hover {
+  background: #ffe000;
+  color: #16537c; }
 
 .siteWide, #app {
   max-width: 50rem;
@@ -412,7 +410,8 @@ h1, h2, h3, h4 {
   text-align: center; }
 
 .GameGrid {
-  margin: 0 auto; }
+  margin: 0 auto;
+  background: #16537c; }
 
 .gameBlock, .Category--title, .Clue--holder {
   height: 5rem;
@@ -425,12 +424,12 @@ h1, h2, h3, h4 {
   -moz-box-flex: 1;
   -moz-flex: 1;
   -ms-flex: 1;
-  flex: 1;
-  background: black; }
+  flex: 1; }
 
 .Category--title {
   color: #cee6f6;
-  background: #16537c; }
+  background: #16537c;
+  word-wrap: break-word; }
   .Category--title h4 {
     display: inline-block; }
 

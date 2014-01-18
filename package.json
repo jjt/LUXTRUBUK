@@ -33,6 +33,9 @@
     "lodash": "~2.4.1",
     "chalk": "~0.4.0",
     "node-bourbon": "~1.0.0",
-    "gulp-sass": "~0.4.0"
+    "gulp-sass": "~0.4.0",
+    "gulp-mocha": "~0.3.0",
+    "should": "~3.0.1",
+    "chai": "~1.8.1"
   }
 }
