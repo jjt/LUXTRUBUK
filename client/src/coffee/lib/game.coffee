@@ -1,5 +1,8 @@
 _ = require 'lodash'
 
+log = (msg) ->
+  console.log.call(console, msg)
+
 getClues = (gamehash, next)->
   gameKey = "game-" + gamehash
   localGame = localStorage.getItem(gameKey)
@@ -14,37 +17,82 @@ getRandomHash = (next)->
     success: (data) ->
       next(data)
 
-sortToMiddleByLen = (array) ->
-  sortToMiddle array, (a,b)->
-    -1 if a.length < b.length
-    1 if a.length > b.length
-    0
-
-sortToMiddle = (array, sortFn=(a,b)-> if a < b then -1 else 1)->
-  sorted = array.sort(sortFn)
+sortToMiddle = (arr, sortByFn = _.identity)->
+  sorted = _.sortBy(arr, sortByFn)
   head = _.filter sorted, (el, index, arr)->
     (index % 2) == 0
   tail = _.difference(sorted, head).reverse()
-  head.concat tail
+  out = head.concat tail
+  out
 
-  
+sortToMiddleByLen = (arr) ->
+  sortToMiddle arr, (item)->
+    item.length
+ 
+sortCatGroup = (arr)->
+  arr = sortToMiddle arr, (item)->
+    item.cat.length
 
-# Takes an array of clue rows and builds up a structured game
-formatClues = (clues)->
-  _.chain(clues)
-    # Group by rounds
-    .groupBy((clue)-> return clue.round)
-    .map((round)->
-      # For each round, group by category
-      _.chain(round)
-        .groupBy((clue)-> return clue.category)
-        .values()
-        .sortToMiddle()
-        .value()
-    )
-    .tap(log)
-    .value()
+cluesByRound = (clues, roundNum)->
+  _.filter clues, 'round': roundNum
+
+cluesByCategory = (clues, category)->
+  _.filter clues, 'category': category
+
+
+defaultPlayers =
+  Hortence: 0
+  Edmund: 0
+  Aloisius: 0
+
+class Game
+  constructor: (@clues, @players = defaultPlayers)->
+    @gamehash = @clues[0].gamehash
+    @_round = 0
+
+  getClue: (cluehash)->
+    if not cluehash?
+      return @clues[0]
+    
+    clue = _.find @clues, cluehash: cluehash
+    clue
+
+  pickClue: (cluehash)->
+    clue = @getClue cluehash
+    clue.picked = true
+    clue
+
+  # Get clues from the current round
+  curClues: ()->
+    cluesByRound(@clues, @_round)
+
+  curCluesByCat: ()->
+    clues = @curClues()
+    a = _.chain(clues)
+      .groupBy('category')
+      .mapValues((v,k)->
+        cat: k
+        clues: v
+      )
+      .toArray()
+      .tap(sortCatGroup)
+      .valueOf()
+    #sortCatGroup(a)
+
+  updateGame: ()->
+    cluesLeft = _.filter(@curClues(), {picked: undefined}).length
+    if cluesLeft <= 0
+      @_round++
+      return true
+    false
+
+  start: ()->
+    @_round = 1
+
+  round: ()->
+    @_round
 
 
 module.exports = ()->
-  {formatClues, sortToMiddle, getRandomHash, getClues, sortToMiddleByLen}
+  {sortToMiddle, getRandomHash, getClues, sortToMiddleByLen,
+    cluesByRound, Game}

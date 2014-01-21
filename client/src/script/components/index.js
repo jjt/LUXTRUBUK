@@ -2,7 +2,7 @@
 Zepto(function(){
   var Luxtrubuk = require('./luxtrubuk.js');
   var $app = document.getElementById('app');
-  var game = require('../../../lib/game.js');  
+  var gL = gameLib = require('../../../lib/game.js')();
 
   // Routes
   var home = function() {
@@ -13,23 +13,26 @@ Zepto(function(){
     ].join('')
   }
 
-  var game = function(gamehash) {
+  var gameRoute = function(gamehash) {
     console.log('GAME ', gamehash);
-    getGame(gamehash, function(data){
-      console.log(data);
+    gL.getClues(gamehash, function(clues){
+      gameObj = new gL.Game(clues);
+      gameObj.clues = gameObj.clues.map(function(el, index){
+        if(index !== 14 && index < 30) el.picked = true;
+        return el;
+      });
+      gameObj.start();
       React.renderComponent(
-        Luxtrubuk( {clues:data}),
+        Luxtrubuk( {game:gameObj}),
         $app
       );
-    })
+    });
   }
 
   var newGame = function() {
-    console.log('newgame');
     $.ajax({
       url: '/api/game/randomHash',
       success: function(data){
-        console.log("New game success!", data);
         router("#/game/" + data, 'Game #' +data);
       }
     }); 
@@ -55,7 +58,7 @@ Zepto(function(){
       return newGame()
     var gameHash = hash.match(/\/game\/(\w*)/)
     if(gameHash != null && gameHash.length > 1)
-      return game(gameHash[1])
+      return gameRoute(gameHash[1])
     return err404()
   }
 

@@ -1,0 +1,24 @@
+html {
+  height: 100%;
+}
+
+body {
+  background: $blue;
+  color:$bodyColor; 
+  height:100%;
+}
+
+a {
+  color:$yellow;
+  text-decoration:none;
+}
+
+
+h1,h2,h3,h4 {
+  font-weight:normal;
+}
+
+h1,h2,h3 {
+  color:darken($bodyColor,10%);
+}
+

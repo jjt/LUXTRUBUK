@@ -1,0 +1,195 @@
+.GameGrid {
+  @extend %flexbox;
+  margin:0 auto;
+  background: $blue;
+  position:relative;
+}
+
+.gameBlock {
+  //@include radial-gradient(circle at 0 0, #3b3ef7, #151EA2);
+  height:4rem;
+  padding:0.2rem;
+  color:white;
+  //border-right:1px solid rgba(0,0,0,0.1);
+  //border-bottom:1px solid rgba(0,0,0,0.1);
+  //border-top:1px solid rgba(255,255,255,0.05);
+  //border-left:1px solid rgba(255,255,255,0.05);
+}
+
+.Category {
+  @include flex(1);
+}
+
+
+%titleStyle {
+  color:$headerColor;
+}
+
+.Category--title {
+  @extend %flexbox;
+  @extend .gameBlock;
+  @extend %flexCenter;
+  @extend %titleStyle;
+  background:$blue;
+  word-wrap: break-word;
+  h4 {
+    display:inline-block;
+  }
+}
+
+.Clue {
+  @extend %flexbox;
+  @extend .gameBlock;  
+  @extend %flexCenter;
+  background:$blue;
+  color: $yellow;
+  &:hover {
+    cursor: pointer;
+    color:$blue;
+    background:$yellow;
+  }
+}
+
+.Clue--value {
+  font-size:2.6rem;
+  display: inline-block;
+  &.fourDigit {
+    font-size:2.2rem;
+  }
+}
+
+.Clue--picked {
+  $darkHeaderColor: darken($headerColor,20%);
+  color:$darkHeaderColor;
+  &:hover {
+    color:$darkHeaderColor;
+    background:none;
+    cursor: default;
+  }
+}
+
+
+.ClueDetail {
+  position:absolute;
+  width:100%;
+  height:100%;
+  z-index:100;
+  background:$blue;
+  text-align:center;
+  &.hide {
+    display:none;
+  }
+}
+
+.ClueDetail--title {
+  @extend %titleStyle;
+  font-size:1.6rem;
+  margin-top:1.5rem;
+  margin-bottom:1.5rem;
+}
+
+.ClueDetail--clue, .ClueDetail--answer{
+  font-size:2.2rem;
+}
+
+.ClueDetail--answerHolder {
+  @extend %flexbox;
+  @extend %flexCenter;
+  height:10rem;
+}
+
+.ClueDetail--answer {
+  display:none;
+  color:$yellow;
+  margin-bottom:1.5rem;
+  padding-top:1.3rem;
+  &.show {
+    display:block;
+  }
+}
+
+.ClueDetail--showAnswer {
+  @extend %btn;
+  font-size:1.6rem;
+}
+
+
+
+.ClueDetail--done {
+  display:block;
+  margin:0 0.8rem;
+  @extend %btn;
+  font-size:1.6rem;
+}
+
+.Controls {
+  @extend %flexbox;
+  position:absolute;
+  height:3rem;
+  bottom:0;
+  width:100%;
+}
+
+.PlayerBar {
+  @extend %flexbox; 
+  @extend %flexCenter;
+}
+
+.Player--group, .Control--group {
+  @include flex(1);
+}
+
+.Player--group h4 {
+  margin-bottom:0.2rem;
+}
+
+@mixin playerColor($color) {
+  //border-top: 3px solid $color;
+}
+
+.PlayerDisplay {
+  margin-top:1.5rem;
+  @include flex(1);
+  display:block;
+  height:3rem;
+  h3{
+    margin-top:0.6em; 
+  }
+}
+
+.PlayerDisplay--1 {
+  @include playerColor(darken($headerColor,14%));
+}
+
+.PlayerDisplay--2 {
+  @include playerColor(darken($headerColor,21%));
+}
+
+.PlayerDisplay--3 {
+  @include playerColor(darken($headerColor,7%));
+}
+
+.PlayerDisplay--dummy {
+  @include playerColor(darken($headerColor,15%));
+  @extend .PlayerDisplay;
+}
+
+
+.Control--group {
+  a {
+    display:inline-block;
+    margin:0 auto;
+    font-size:1.2rem;
+    @extend %btn;
+  }
+}
+
+%playerBtn {
+  font-size:1.6rem;
+  display:inline-block;
+}
+
+.PlayerBtn--wrong, .PlayerBtn--right {
+  @extend %playerBtn;
+  @extend %btn;
+}

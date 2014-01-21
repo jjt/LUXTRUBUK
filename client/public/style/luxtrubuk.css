@@ -324,7 +324,7 @@ table {
   border-collapse: collapse;
   border-spacing: 0; }
 
-.GameGrid, .Category--title, .Clue--holder {
+.GameGrid, .Category--title, .Clue, .ClueDetail--answerHolder, .Controls, .PlayerBar {
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-flex;
@@ -364,17 +364,15 @@ table {
 
 
 
-.Category--title, .Clue--holder {
-  justify-content: center;
-  align-items: center;
-  text-align: center; }
+.hide {
+  display: none !important; }
 
 html {
   height: 100%; }
 
 body {
-  background: #16537c;
-  color: rgba(255, 255, 255, 0.8);
+  background: #124566;
+  color: #a7c1d0;
   height: 100%; }
 
 a {
@@ -385,21 +383,41 @@ h1, h2, h3, h4 {
   font-weight: normal; }
 
 h1, h2, h3 {
-  color: rgba(255, 255, 255, 0.6); }
+  color: #86aabe; }
 
-.newGame {
-  padding: 0.4em 1em;
-  display: inline-block;
-  border: 1px solid #ffe000; }
-
-.newGame:hover {
-  background: #ffe000;
-  color: #16537c; }
+.Category--title, .Clue, .ClueDetail--answerHolder, .PlayerBar {
+  justify-content: center;
+  align-items: center;
+  text-align: center; }
 
 .siteWide, #app {
   max-width: 50rem;
   margin: 0 auto; }
 
+#app {
+  position: relative; }
+
+.siteHeader {
+  text-align: center; }
+  .siteHeader .headerBlock {
+    background: #124566;
+    display: inline-block; }
+  .siteHeader h1 {
+    font-size: 3rem;
+    font-weight: normal; }
+    .siteHeader h1 a {
+      color: #ffe000;
+      text-decoration: none; }
+
+.newGame, .ClueDetail--showAnswer, .ClueDetail--done, .Control--group a, .PlayerBtn--wrong, .PlayerBtn--right {
+  padding: 0.4em 1em;
+  display: inline-block;
+  border: 1px solid #759fb5;
+  cursor: pointer; }
+
+.newGame:hover, .ClueDetail--showAnswer:hover, .ClueDetail--done:hover, .Control--group a:hover, .PlayerBtn--wrong:hover, .PlayerBtn--right:hover {
+  background: #ffe000;
+  color: #124566; }
 
 .newGame {
   font-size: 1.2rem;
@@ -411,10 +429,11 @@ h1, h2, h3 {
 
 .GameGrid {
   margin: 0 auto;
-  background: #16537c; }
+  background: #124566;
+  position: relative; }
 
-.gameBlock, .Category--title, .Clue--holder {
-  height: 5rem;
+.gameBlock, .Category--title, .Clue {
+  height: 4rem;
   padding: 0.2rem;
   color: white; }
 
@@ -426,35 +445,114 @@ h1, h2, h3 {
   -ms-flex: 1;
   flex: 1; }
 
+.Category--title, .ClueDetail--title {
+  color: #759fb5; }
+
 .Category--title {
-  color: #cee6f6;
-  background: #16537c;
+  background: #124566;
   word-wrap: break-word; }
   .Category--title h4 {
     display: inline-block; }
 
-.Clue--holder {
-  background: #16537c;
+.Clue {
+  background: #124566;
   color: #ffe000; }
-  .Clue--holder:hover {
+  .Clue:hover {
     cursor: pointer;
-    color: #16537c;
+    color: #124566;
     background: #ffe000; }
 
-.Value {
+.Clue--value {
   font-size: 2.6rem;
   display: inline-block; }
-  .Value.fourDigit {
+  .Clue--value.fourDigit {
     font-size: 2.2rem; }
 
-.siteHeader {
+.Clue--picked {
+  color: #446c80; }
+  .Clue--picked:hover {
+    color: #446c80;
+    background: none;
+    cursor: default; }
+
+.ClueDetail {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  background: #124566;
   text-align: center; }
-  .siteHeader .headerBlock {
-    background: #16537c;
-    display: inline-block; }
-  .siteHeader h1 {
-    font-size: 3rem;
-    font-weight: normal; }
-    .siteHeader h1 a {
-      color: #ffe000;
-      text-decoration: none; }
+  .ClueDetail.hide {
+    display: none; }
+
+.ClueDetail--title {
+  font-size: 1.6rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem; }
+
+.ClueDetail--clue, .ClueDetail--answer {
+  font-size: 2.2rem; }
+
+.ClueDetail--answerHolder {
+  height: 10rem; }
+
+.ClueDetail--answer {
+  display: none;
+  color: #ffe000;
+  margin-bottom: 1.5rem;
+  padding-top: 1.3rem; }
+  .ClueDetail--answer.show {
+    display: block; }
+
+.ClueDetail--showAnswer {
+  font-size: 1.6rem; }
+
+.ClueDetail--done {
+  display: block;
+  margin: 0 0.8rem;
+  font-size: 1.6rem; }
+
+.Controls {
+  position: absolute;
+  height: 3rem;
+  bottom: 0;
+  width: 100%; }
+
+
+.Player--group, .Control--group {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  -moz-box-flex: 1;
+  -moz-flex: 1;
+  -ms-flex: 1;
+  flex: 1; }
+
+.Player--group h4 {
+  margin-bottom: 0.2rem; }
+
+.PlayerDisplay, .PlayerDisplay--dummy {
+  margin-top: 1.5rem;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  -moz-box-flex: 1;
+  -moz-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  display: block;
+  height: 3rem; }
+  .PlayerDisplay h3 {
+    margin-top: 0.6em; }
+
+
+
+
+
+.Control--group a {
+  display: inline-block;
+  margin: 0 auto;
+  font-size: 1.2rem; }
+
+.PlayerBtn--wrong, .PlayerBtn--right {
+  font-size: 1.6rem;
+  display: inline-block; }
+

@@ -1,0 +1,32 @@
+%flexCenter {
+  justify-content: center;
+  align-items: center;
+  text-align:center;
+}
+
+.siteWide {
+  max-width:50rem;
+  margin:0 auto;
+}
+
+
+#app {
+  @extend .siteWide;
+  position:relative;
+}
+.siteHeader {
+  text-align:center;
+  .headerBlock {
+    background:$blue;
+    display:inline-block;
+  }
+  h1 {
+    font-size:3rem;
+    font-weight:normal;
+    a {
+      color:$yellow;
+      text-decoration: none;
+    }
+  }
+}
+

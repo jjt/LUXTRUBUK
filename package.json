@@ -24,7 +24,7 @@
     "gulp-util": "~2.2.9",
     "gulp-coffee": "~1.2.5",
     "gulp-load-tasks": "~0.1.1",
-    "gulp": "~3.3.1",
+    "gulp": "~3.4.1",
     "gulp-browserify": "~0.2.5",
     "gulp-nodemon": "~0.1.1",
     "gulp-jade": "~0.3.0",
@@ -36,6 +36,10 @@
     "gulp-sass": "~0.4.0",
     "gulp-mocha": "~0.3.0",
     "should": "~3.0.1",
-    "chai": "~1.8.1"
+    "chai": "~1.8.1",
+    "chai-fs": "0.0.3",
+    "prettyjson": "~0.10.0",
+    "gulp-livereload": "~0.2.0",
+    "tiny-lr": "0.0.5"
   }
 }

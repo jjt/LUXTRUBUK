@@ -1,14 +1,18 @@
-var _ = require('lodash');
-var gulp = require('gulp');
-var sass = require('gulp-sass');
-var chalk = require('chalk');
-var gutil = require('gulp-util');
-var mocha = require('gulp-mocha');
-var react = require('gulp-react');
-var coffee = require('gulp-coffee');
-var concat = require('gulp-concat');
-var nodemon = require('gulp-nodemon');
+var livereload = require('gulp-livereload');
 var browserify = require('gulp-browserify');
+var nodemon = require('gulp-nodemon');
+var concat = require('gulp-concat');
+var coffee = require('gulp-coffee');
+var react = require('gulp-react');
+var mocha = require('gulp-mocha');
+var gutil = require('gulp-util');
+var chalk = require('chalk');
+var sass = require('gulp-sass');
+var gulp = require('gulp');
+var lr = require('tiny-lr');
+var _ = require('lodash');
+
+var server = lr();
 
 // UTILITY FUNCTIONS
 var error = function(err) {
@@ -22,6 +26,7 @@ var coffeeTaskFn = function(src, dest) {
     gulp.src(src)
       .pipe(coffee({bare:true}).on('error', error))
       .pipe(gulp.dest(dest))
+      .pipe(livereload(server));
   }
 }
 gulp.task('coffeeMain', coffeeTaskFn('src', './'));
@@ -33,14 +38,16 @@ gulp.task('coffeeServer', coffeeTaskFn('server/src/coffee/**/*.coffee', 'server'
 gulp.task('react', function() {
   gulp.src('client/src/jsx/**/*.jsx')
     .pipe(react().on('error', error))
-    .pipe(gulp.dest('client/src/script/components'));
+    .pipe(gulp.dest('client/src/script/components'))
+    .pipe(livereload(server));
 });	
 
 // BROWSERIFY
 gulp.task('browserify', function () {
   gulp.src('client/src/script/components/index.js') 
     .pipe(browserify({debug: true}).on('error', error))
-    .pipe(gulp.dest('client/public/script'));
+    .pipe(gulp.dest('client/public/script'))
+    .pipe(livereload(server));
 });
 
 // SASS COMPILATION
@@ -51,6 +58,7 @@ gulp.task('sass', function() {
         .on('error', error)
     )
     .pipe(gulp.dest('client/public/style'))
+    .pipe(livereload(server));
 });	
 
 // BACKEND SERVER
@@ -61,8 +69,9 @@ gulp.task('server', function () {
 
 gulp.task('testClient', function() {
   gulp.src('client/test/spec/*.js')
-    .pipe(mocha({reporter: 'dot', colors: false}).on('error', error));
+    .pipe(mocha({reporter: 'dot'}).on('error', error));
 });	
+
 
 // RUN IT ALL
 gulp.task('default', function () {
@@ -72,8 +81,12 @@ gulp.task('default', function () {
   gulp.run('coffeeClient');
   gulp.run('sass');
   gulp.run('server');
-  
   gulp.run('react');
+
+  server.listen(35729, function(err){
+    if(err) return console.log(err);
+  });
+
 
   gulp.watch('client/test/spec/*.js', function() {
     gulp.run('testClient');
@@ -89,7 +102,6 @@ gulp.task('default', function () {
 
   gulp.watch('client/src/coffee/**/*.coffee', function () {
     gulp.run('coffeeClient');
-    gulp.run('react');
     gulp.run('browserify');
   });
   
@@ -99,6 +111,9 @@ gulp.task('default', function () {
 
   gulp.watch('client/src/jsx/**/*.jsx', function() {
     gulp.run('react');
-    gulp.run('browserify');
   });  
+
+  gulp.watch(['client/src/script/**/*.js', 'client/lib/**/*.js'], function() {
+    gulp.run('browserify'); 
+  }); 
 });

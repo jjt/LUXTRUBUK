@@ -4,145 +4,18 @@
 @import "sass-flex-mixin/flex";
 @import "solarized/scss/solarized";
 
-$blue: darken($solarized-blue, 20%);
+$blue: darken($solarized-blue, 25%);
 $yellow: #ffe000;
+$bodyColor: desaturate(lighten($blue,50%), 40%);
+$headerColor: darken($bodyColor, 15%);
 
-
-%flexCenter {
-  justify-content: center;
-  align-items: center;
-  text-align:center;
+.hide {
+  display:none !important;
 }
 
 
-html {
-  height: 100%;
-}
-
-body {
-  background: $blue;
-  color:rgba(#ffffff, 0.8);
-  height:100%;
-}
-
-a {
-  color:$yellow;
-  text-decoration:none;
-}
-
-
-h1,h2,h3,h4 {
-  font-weight:normal;
-}
-
-h1,h2,h3 {
-  color:rgba(#fff, 0.6);
-}
-
-%btn {
-  padding:0.4em 1em;
-  display:inline-block;
-  border:1px solid $yellow;
-}
-
-%btn:hover{
-  background:$yellow;
-  color:$blue;
-}
-
-//.button:hover {
-  //background:$yellow;
-  //color:$blue;
-//}
-
-.siteWide {
-  max-width:50rem;
-  margin:0 auto;
-}
-
-
-#app {
-  @extend .siteWide;
-}
-
-.newGame {
-  @extend %btn;
-  font-size:1.2rem;
-  margin:0 auto;
-}
-
-.newGameRow {
-  padding-top:3rem;
-  text-align: center;
-}
-
-.GameGrid {
-  @extend %flexbox;
-  margin:0 auto;
-  background: $blue;
-}
-
-.gameBlock {
-  //@include radial-gradient(circle at 0 0, #3b3ef7, #151EA2);
-  height:5rem;
-  padding:0.2rem;
-  color:white;
-  //border-right:1px solid rgba(0,0,0,0.1);
-  //border-bottom:1px solid rgba(0,0,0,0.1);
-  //border-top:1px solid rgba(255,255,255,0.05);
-  //border-left:1px solid rgba(255,255,255,0.05);
-}
-
-.Category {
-  @include flex(1);
-}
-
-.Category--title {
-  @extend %flexbox;
-  @extend .gameBlock;
-  @extend %flexCenter;
-  color: lighten($blue, 60%);
-  background:$blue;
-  word-wrap: break-word;
-  h4 {
-    display:inline-block;
-  }
-}
-
-.Clue--holder {
-  @extend %flexbox;
-  @extend .gameBlock;  
-  @extend %flexCenter;
-  background:$blue;
-  color: $yellow;
-  &:hover {
-    cursor: pointer;
-    color:$blue;
-    background:$yellow;
-  }
-}
-
-.Value {
-  font-size:2.6rem;
-  display: inline-block;
-  &.fourDigit {
-    font-size:2.2rem;
-  }
-}
-
-
-.siteHeader {
-  text-align:center;
-  .headerBlock {
-    background:$blue;
-    display:inline-block;
-  }
-  h1 {
-    font-size:3rem;
-    font-weight:normal;
-    a {
-      color:$yellow;
-      text-decoration: none;
-    }
-  }
-}
+@import 'base';
+@import 'scaffold';
+@import 'btn';
+@import 'page-home.scss';
+@import 'Game';

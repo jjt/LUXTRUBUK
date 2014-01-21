@@ -1,0 +1,12 @@
+%btn {
+  padding:0.4em 1em;
+  display:inline-block;
+  border:1px solid $headerColor;
+  cursor: pointer;
+}
+
+%btn:hover{
+  background:$yellow;
+  color:$blue;
+}
+
