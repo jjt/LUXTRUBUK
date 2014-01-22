@@ -32,7 +32,7 @@ var Clue = React.createClass({displayName: 'Clue',
           'Clue--picked':this.state.picked
         })
       , valueClasses = cx({
-          'Clue--value': true,
+          'Clue__value': true,
           'fourDigit': this.props.value/1000 >= 1
         });
     return(
@@ -56,7 +56,7 @@ var Category = React.createClass({displayName: 'Category',
         },this);
     return(
       React.DOM.div( {className:"Category"}, 
-        React.DOM.div( {className:"Category--title"}, 
+        React.DOM.div( {className:"Category__title"}, 
           React.DOM.h4(null,  this.props.key )
         ),
         clueComponents 
@@ -67,10 +67,17 @@ var Category = React.createClass({displayName: 'Category',
 
 var PlayerBtn = React.createClass({displayName: 'PlayerBtn',
   render: function() {
+    var disabled = this.props.disabled ? 'disabled' : '';
     return(
-      React.DOM.div( {className:"Player--group"}, 
-        React.DOM.a( {className:"PlayerBtn--wrong"}, React.DOM.i( {className:"icon-cancel"})),
-        React.DOM.a( {className:"PlayerBtn--right"}, React.DOM.i( {className:"icon-ok"}))
+      React.DOM.div( {className:"Player__group"}, 
+        React.DOM.a( {disabled:disabled ? true : null, className:cx({PlayerBtn__wrong: true,
+          'btn-disabled': this.props.disabled})}, 
+          React.DOM.i( {className:"icon-cancel"})
+        ),
+        React.DOM.a( {disabled:disabled ? true : null, className:cx({PlayerBtn__right: true,
+          'btn-disabled': this.props.disabled})}, 
+          React.DOM.i( {className:"icon-ok"})
+        )
       )  
     )
   }
@@ -80,30 +87,35 @@ var ClueDetail = React.createClass({displayName: 'ClueDetail',
   showAnswer: function() {
     this.setProps({showAnswer: true});
   },
-  close: function() {
+  close: function(ev) {
+    console.log(ev);
     this.setProps({hide:true});
     console.log(this.props);
     this.props.onClueClose();
   },
   render: function () {
+    var disabled = this.props.showAnswer == null || this.props.showAnswer == false;
     var playerBtns = _.map(this.props.players, function(player){
-      return (PlayerBtn( {player:player} )) 
+      return (PlayerBtn( {player:player, disabled:disabled})) 
     });
     return(
       React.DOM.div( {className:cx({ClueDetail: true, hide: this.props.hide})}, 
-        React.DOM.div( {className:"ClueDetail--title"}, this.props.clue.category),
-        React.DOM.div( {className:"ClueDetail--clue"}, this.props.clue.clue), 
-        React.DOM.div( {className:"ClueDetail--answerHolder"}, 
-          React.DOM.div( {className:cx({"ClueDetail--answer":true,
+        React.DOM.div( {className:"ClueDetail__title"}, this.props.clue.category),
+        React.DOM.div( {className:"ClueDetail__clue"}, this.props.clue.clue),
+        React.DOM.div( {className:"ClueDetail__answerHolder"}, 
+          React.DOM.div( {className:cx({"ClueDetail__answer":true,
             show: this.props.showAnswer})}, this.props.clue.answer),
-          React.DOM.a( {className:cx({"ClueDetail--showAnswer":true,
+          React.DOM.a( {className:cx({"ClueDetail__showAnswer":true,
             "hide":this.props.showAnswer}), onClick:this.showAnswer}, 
             " Show Answer") 
         ),
         React.DOM.div( {className:"Controls"}, 
           playerBtns, 
-          React.DOM.div( {className:"Player--group"}, 
-            React.DOM.a( {onClick:this.close, className:"ClueDetail--done"}, "Done") 
+          React.DOM.div( {className:"Player__group"}, 
+            React.DOM.a( {disabled:disabled ? 'disabled' : null, onClick:this.close,
+              className:cx({ClueDetail__done: true, 'btn-disabled': disabled})}, 
+              " Done "
+            ) 
           )
         )
       ) 
@@ -117,7 +129,8 @@ var PlayerDisplay = React.createClass({displayName: 'PlayerDisplay',
     var className = "PlayerDisplay PlayerDisplay--" + this.props.key;
     return(
       React.DOM.div( {className:className}, 
-        React.DOM.h3(null, this.props.name,": $",this.props.score)
+        React.DOM.h4(null, this.props.name),
+        React.DOM.p( {className:"PlayerDisplay__score"}, "$",this.props.score)
       )
     );
   }
@@ -133,7 +146,9 @@ var PlayerBar = React.createClass({displayName: 'PlayerBar',
     return(
       React.DOM.div( {className:"PlayerBar"}, 
         players,
-        React.DOM.div( {className:"PlayerDisplay--dummy"}
+        React.DOM.div( {className:"PlayerDisplay PlayerDisplay--dummy"}, 
+          React.DOM.h4(null, "Round"),
+          React.DOM.p( {className:"PlayerDisplay__score"}, this.props.round)
         )
       )  
     );
@@ -188,7 +203,7 @@ var Game = React.createClass({displayName: 'Game',
           React.DOM.div( {id:"clueDetail"}),
           categoryComponents 
         ),
-        PlayerBar( {players:this.state.game.players} )
+        PlayerBar( {players:this.state.game.players, round:round} )
       )
     );
   }

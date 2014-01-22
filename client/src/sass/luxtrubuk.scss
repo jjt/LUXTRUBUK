@@ -8,6 +8,8 @@ $blue: darken($solarized-blue, 25%);
 $yellow: #ffe000;
 $bodyColor: desaturate(lighten($blue,50%), 40%);
 $headerColor: darken($bodyColor, 15%);
+$darkHeaderColor: darken($headerColor,20%);
+$darkestBlue: darken($headerColor, 30%);
 
 .hide {
   display:none !important;

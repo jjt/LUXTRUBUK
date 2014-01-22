@@ -3,6 +3,7 @@
   margin:0 auto;
   background: $blue;
   position:relative;
+  box-shadow:0px 30px 30px -30px rgba(#000, 0.1);
 }
 
 .gameBlock {
@@ -25,7 +26,7 @@
   color:$headerColor;
 }
 
-.Category--title {
+.Category__title {
   @extend %flexbox;
   @extend .gameBlock;
   @extend %flexCenter;
@@ -50,7 +51,7 @@
   }
 }
 
-.Clue--value {
+.Clue__value {
   font-size:2.6rem;
   display: inline-block;
   &.fourDigit {
@@ -59,7 +60,6 @@
 }
 
 .Clue--picked {
-  $darkHeaderColor: darken($headerColor,20%);
   color:$darkHeaderColor;
   &:hover {
     color:$darkHeaderColor;
@@ -81,24 +81,24 @@
   }
 }
 
-.ClueDetail--title {
+.ClueDetail__title {
   @extend %titleStyle;
   font-size:1.6rem;
   margin-top:1.5rem;
   margin-bottom:1.5rem;
 }
 
-.ClueDetail--clue, .ClueDetail--answer{
+.ClueDetail__clue, .ClueDetail__answer{
   font-size:2.2rem;
 }
 
-.ClueDetail--answerHolder {
+.ClueDetail__answerHolder {
   @extend %flexbox;
   @extend %flexCenter;
   height:10rem;
 }
 
-.ClueDetail--answer {
+.ClueDetail__answer {
   display:none;
   color:$yellow;
   margin-bottom:1.5rem;
@@ -108,14 +108,14 @@
   }
 }
 
-.ClueDetail--showAnswer {
+.ClueDetail__showAnswer {
   @extend %btn;
   font-size:1.6rem;
 }
 
 
 
-.ClueDetail--done {
+.ClueDetail__done {
   display:block;
   margin:0 0.8rem;
   @extend %btn;
@@ -126,20 +126,22 @@
   @extend %flexbox;
   position:absolute;
   height:3rem;
-  bottom:0;
+  bottom:1rem;
   width:100%;
 }
 
 .PlayerBar {
   @extend %flexbox; 
   @extend %flexCenter;
+  padding-top:0.5rem;
+  position:relative;
 }
 
-.Player--group, .Control--group {
+.Player__group, .Control__group {
   @include flex(1);
 }
 
-.Player--group h4 {
+.Player__group h4 {
   margin-bottom:0.2rem;
 }
 
@@ -148,12 +150,14 @@
 }
 
 .PlayerDisplay {
-  margin-top:1.5rem;
   @include flex(1);
   display:block;
   height:3rem;
-  h3{
+  h4{
     margin-top:0.6em; 
+    margin-bottom:0;
+    @extend %titleStyle;
+    text-transform:uppercase;
   }
 }
 
@@ -174,8 +178,13 @@
   @extend .PlayerDisplay;
 }
 
+.PlayerDisplay__score {
+  margin:0;
+  color:$headerColor;
+  font-size:$gamma;
+}
 
-.Control--group {
+.Control__group {
   a {
     display:inline-block;
     margin:0 auto;
@@ -189,7 +198,20 @@
   display:inline-block;
 }
 
-.PlayerBtn--wrong, .PlayerBtn--right {
+.PlayerBtn__wrong, .PlayerBtn__right {
+  position:relative;
   @extend %playerBtn;
   @extend %btn;
+  &:hover {
+  z-index:10;
+  
+  }
+}
+
+.PlayerBtn__wrong.btn-error, .PlayerBtn__right.btn-success {
+  z-index:11;
+}
+
+.PlayerBtn__right {
+  margin-left:-1px;
 }

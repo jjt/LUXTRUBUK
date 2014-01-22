@@ -324,7 +324,7 @@ table {
   border-collapse: collapse;
   border-spacing: 0; }
 
-.GameGrid, .Category--title, .Clue, .ClueDetail--answerHolder, .Controls, .PlayerBar {
+.GameGrid, .Category__title, .Clue, .ClueDetail__answerHolder, .Controls, .PlayerBar {
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-flex;
@@ -385,7 +385,7 @@ h1, h2, h3, h4 {
 h1, h2, h3 {
   color: #86aabe; }
 
-.Category--title, .Clue, .ClueDetail--answerHolder, .PlayerBar {
+.Category__title, .Clue, .ClueDetail__answerHolder, .PlayerBar {
   justify-content: center;
   align-items: center;
   text-align: center; }
@@ -409,15 +409,42 @@ h1, h2, h3 {
       color: #ffe000;
       text-decoration: none; }
 
-.newGame, .ClueDetail--showAnswer, .ClueDetail--done, .Control--group a, .PlayerBtn--wrong, .PlayerBtn--right {
+.btn-success, .btn-error, .btn-disabled, .newGame, .ClueDetail__showAnswer, .ClueDetail__done, .Control__group a, .PlayerBtn__wrong, .PlayerBtn__right {
   padding: 0.4em 1em;
   display: inline-block;
   border: 1px solid #759fb5;
-  cursor: pointer; }
+  cursor: pointer;
+  line-height: 1; }
 
-.newGame:hover, .ClueDetail--showAnswer:hover, .ClueDetail--done:hover, .Control--group a:hover, .PlayerBtn--wrong:hover, .PlayerBtn--right:hover {
+.btn-success:hover, .btn-error:hover, .btn-disabled:hover, .newGame:hover, .ClueDetail__showAnswer:hover, .ClueDetail__done:hover, .Control__group a:hover, .PlayerBtn__wrong:hover, .PlayerBtn__right:hover {
   background: #ffe000;
-  color: #124566; }
+  color: #124566;
+  border: 1px solid #ffe000; }
+
+.btn-success {
+  color: rgba(255, 255, 255, 0.8);
+  background: #859900;
+  border: 1px solid #859900; }
+  .btn-success:hover {
+    color: rgba(255, 255, 255, 0.8);
+    background: #859900;
+    border: 1px solid #859900; }
+
+.btn-error {
+  color: rgba(255, 255, 255, 0.8);
+  background: #dc322f;
+  border: 1px solid #dc322f; }
+  .btn-error:hover {
+    color: rgba(255, 255, 255, 0.8);
+    background: #dc322f;
+    border: 1px solid #dc322f; }
+
+.btn-disabled, .btn-disabled:hover {
+  color: #416984;
+  border: 1px solid #416984;
+  background: none;
+  cursor: default; }
+
 
 .newGame {
   font-size: 1.2rem;
@@ -430,9 +457,10 @@ h1, h2, h3 {
 .GameGrid {
   margin: 0 auto;
   background: #124566;
-  position: relative; }
+  position: relative;
+  box-shadow: 0px 30px 30px -30px rgba(0, 0, 0, 0.1); }
 
-.gameBlock, .Category--title, .Clue {
+.gameBlock, .Category__title, .Clue {
   height: 4rem;
   padding: 0.2rem;
   color: white; }
@@ -445,13 +473,13 @@ h1, h2, h3 {
   -ms-flex: 1;
   flex: 1; }
 
-.Category--title, .ClueDetail--title {
+.Category__title, .ClueDetail__title, .PlayerDisplay h4 {
   color: #759fb5; }
 
-.Category--title {
+.Category__title {
   background: #124566;
   word-wrap: break-word; }
-  .Category--title h4 {
+  .Category__title h4 {
     display: inline-block; }
 
 .Clue {
@@ -462,10 +490,10 @@ h1, h2, h3 {
     color: #124566;
     background: #ffe000; }
 
-.Clue--value {
+.Clue__value {
   font-size: 2.6rem;
   display: inline-block; }
-  .Clue--value.fourDigit {
+  .Clue__value.fourDigit {
     font-size: 2.2rem; }
 
 .Clue--picked {
@@ -485,29 +513,29 @@ h1, h2, h3 {
   .ClueDetail.hide {
     display: none; }
 
-.ClueDetail--title {
+.ClueDetail__title {
   font-size: 1.6rem;
   margin-top: 1.5rem;
   margin-bottom: 1.5rem; }
 
-.ClueDetail--clue, .ClueDetail--answer {
+.ClueDetail__clue, .ClueDetail__answer {
   font-size: 2.2rem; }
 
-.ClueDetail--answerHolder {
+.ClueDetail__answerHolder {
   height: 10rem; }
 
-.ClueDetail--answer {
+.ClueDetail__answer {
   display: none;
   color: #ffe000;
   margin-bottom: 1.5rem;
   padding-top: 1.3rem; }
-  .ClueDetail--answer.show {
+  .ClueDetail__answer.show {
     display: block; }
 
-.ClueDetail--showAnswer {
+.ClueDetail__showAnswer {
   font-size: 1.6rem; }
 
-.ClueDetail--done {
+.ClueDetail__done {
   display: block;
   margin: 0 0.8rem;
   font-size: 1.6rem; }
@@ -515,11 +543,14 @@ h1, h2, h3 {
 .Controls {
   position: absolute;
   height: 3rem;
-  bottom: 0;
+  bottom: 1rem;
   width: 100%; }
 
+.PlayerBar {
+  padding-top: 0.5rem;
+  position: relative; }
 
-.Player--group, .Control--group {
+.Player__group, .Control__group {
   -webkit-box-flex: 1;
   -webkit-flex: 1;
   -moz-box-flex: 1;
@@ -527,11 +558,10 @@ h1, h2, h3 {
   -ms-flex: 1;
   flex: 1; }
 
-.Player--group h4 {
+.Player__group h4 {
   margin-bottom: 0.2rem; }
 
 .PlayerDisplay, .PlayerDisplay--dummy {
-  margin-top: 1.5rem;
   -webkit-box-flex: 1;
   -webkit-flex: 1;
   -moz-box-flex: 1;
@@ -540,19 +570,36 @@ h1, h2, h3 {
   flex: 1;
   display: block;
   height: 3rem; }
-  .PlayerDisplay h3 {
-    margin-top: 0.6em; }
+  .PlayerDisplay h4 {
+    margin-top: 0.6em;
+    margin-bottom: 0;
+    text-transform: uppercase; }
 
 
 
 
 
-.Control--group a {
+.PlayerDisplay__score {
+  margin: 0;
+  color: #759fb5;
+  font-size: 1.6rem; }
+
+.Control__group a {
   display: inline-block;
   margin: 0 auto;
   font-size: 1.2rem; }
 
-.PlayerBtn--wrong, .PlayerBtn--right {
+.PlayerBtn__wrong, .PlayerBtn__right {
   font-size: 1.6rem;
   display: inline-block; }
 
+.PlayerBtn__wrong, .PlayerBtn__right {
+  position: relative; }
+  .PlayerBtn__wrong:hover, .PlayerBtn__right:hover {
+    z-index: 10; }
+
+.PlayerBtn__wrong.btn-error, .PlayerBtn__right.btn-success {
+  z-index: 11; }
+
+.PlayerBtn__right {
+  margin-left: -1px; }
