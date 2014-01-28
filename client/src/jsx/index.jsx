@@ -17,10 +17,6 @@ Zepto(function(){
     console.log('GAME ', gamehash);
     gL.getClues(gamehash, function(clues){
       gameObj = new gL.Game(clues);
-      gameObj.clues = gameObj.clues.map(function(el, index){
-        if(index !== 14 && index < 30) el.picked = true;
-        return el;
-      });
       gameObj.start();
       React.renderComponent(
         <Luxtrubuk game={gameObj}/>,

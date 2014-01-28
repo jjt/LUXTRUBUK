@@ -9,10 +9,9 @@ var gutil = require('gulp-util');
 var chalk = require('chalk');
 var sass = require('gulp-sass');
 var gulp = require('gulp');
-var lr = require('tiny-lr');
 var _ = require('lodash');
 
-var server = lr();
+var server = require('tiny-lr')();
 
 // UTILITY FUNCTIONS
 var error = function(err) {
@@ -72,6 +71,25 @@ gulp.task('testClient', function() {
     .pipe(mocha({reporter: 'dot'}).on('error', error));
 });	
 
+gulp.task('lrServe', function() {
+  server.listen(35729, function(err){
+    if(err) return console.log(err);
+  });
+});	
+
+// Shortcut for
+// gulp.watch(src, function() {
+//   gulp.run(task);
+//   gulp.run(task)
+//   ...
+// });
+var gulpWatchRun = function(src, tasks) {
+  if(!_.isArray(tasks))
+    tasks = Array(tasks);
+  return gulp.watch(src, function() {
+    tasks.forEach(function(el){gulp.run(el)}); 
+  }); 
+}
 
 // RUN IT ALL
 gulp.task('default', function () {
@@ -82,38 +100,20 @@ gulp.task('default', function () {
   gulp.run('sass');
   gulp.run('server');
   gulp.run('react');
+  gulp.run('lrServe');
 
-  server.listen(35729, function(err){
-    if(err) return console.log(err);
-  });
-
-
-  gulp.watch('client/test/spec/*.js', function() {
-    gulp.run('testClient');
-  }); 
-
-  gulp.watch('client/src/sass/**/*.scss', function() {
-    gulp.run('sass')
-  }); 
-
-  gulp.watch('client/lib/*.js', function() {
-    gulp.run('testClient') 
-  }); 
-
-  gulp.watch('client/src/coffee/**/*.coffee', function () {
-    gulp.run('coffeeClient');
-    gulp.run('browserify');
-  });
-  
-  gulp.watch('server/src/coffee/**/*.coffee', function () {
-    gulp.run('coffeeServer');
-  });
-
-  gulp.watch('client/src/jsx/**/*.jsx', function() {
-    gulp.run('react');
-  });  
-
-  gulp.watch(['client/src/script/**/*.js', 'client/lib/**/*.js'], function() {
-    gulp.run('browserify'); 
-  }); 
+  gulpWatchRun('client/test/spec/*.js',
+    'testClient'); 
+  gulpWatchRun('client/src/sass/**/*.scss',
+    'sass');
+  gulpWatchRun('client/lib/*.js',
+    'testClient');
+  gulpWatchRun('client/src/coffee/**/*.coffee',
+    ['coffeeClient', 'browserify']);
+  gulpWatchRun('server/src/coffee/**/*.coffee',
+    'coffeeServer');
+  gulpWatchRun('client/src/jsx/**/*.jsx',
+    'react');
+  gulpWatchRun(['client/src/script/**/*.js', 'client/lib/**/*.js'],
+    'browserify'); 
 });

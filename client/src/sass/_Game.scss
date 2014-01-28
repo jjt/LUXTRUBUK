@@ -1,14 +1,14 @@
 .GameGrid {
   @extend %flexbox;
   margin:0 auto;
-  background: $blue;
+  background:$blue;
   position:relative;
-  box-shadow:0px 30px 30px -30px rgba(#000, 0.1);
+  //box-shadow:0px 0 130px 0 rgba(#000, 0.1);
 }
 
 .gameBlock {
   //@include radial-gradient(circle at 0 0, #3b3ef7, #151EA2);
-  height:4rem;
+  height:4.2rem;
   padding:0.2rem;
   color:white;
   //border-right:1px solid rgba(0,0,0,0.1);
@@ -31,7 +31,7 @@
   @extend .gameBlock;
   @extend %flexCenter;
   @extend %titleStyle;
-  background:$blue;
+  //@include radial-gradient(50% 0, ellipse 120% 80%, $blue 50%, rgba(#000, 0.1));
   word-wrap: break-word;
   h4 {
     display:inline-block;
@@ -42,7 +42,6 @@
   @extend %flexbox;
   @extend .gameBlock;  
   @extend %flexCenter;
-  background:$blue;
   color: $yellow;
   &:hover {
     cursor: pointer;
@@ -88,8 +87,12 @@
   margin-bottom:1.5rem;
 }
 
-.ClueDetail__clue, .ClueDetail__answer{
+
+.ClueDetail__answer{
   font-size:2.2rem;
+}
+.ClueDetail__clue {
+  font-size:1.8em;
 }
 
 .ClueDetail__answerHolder {
@@ -126,15 +129,14 @@
   @extend %flexbox;
   position:absolute;
   height:3rem;
-  bottom:1rem;
+  bottom:1px;
   width:100%;
 }
 
 .PlayerBar {
   @extend %flexbox; 
   @extend %flexCenter;
-  padding-top:0.5rem;
-  position:relative;
+  //@include radial-gradient(50% 100%, ellipse 120% 80%, $blue 50%, darken($blue, 3%));
 }
 
 .Player__group, .Control__group {
@@ -152,36 +154,32 @@
 .PlayerDisplay {
   @include flex(1);
   display:block;
-  height:3rem;
+  padding-top:0.5rem;
   h4{
     margin-top:0.6em; 
     margin-bottom:0;
     @extend %titleStyle;
     text-transform:uppercase;
   }
+  &.red {
+    h4 {
+      color: $solarized-red; 
+    }
+  }
 }
 
-.PlayerDisplay--1 {
-  @include playerColor(darken($headerColor,14%));
-}
-
-.PlayerDisplay--2 {
-  @include playerColor(darken($headerColor,21%));
-}
-
-.PlayerDisplay--3 {
-  @include playerColor(darken($headerColor,7%));
-}
 
 .PlayerDisplay--dummy {
   @include playerColor(darken($headerColor,15%));
-  @extend .PlayerDisplay;
 }
 
 .PlayerDisplay__score {
-  margin:0;
-  color:$headerColor;
+  margin:0 0 0.8rem;
+  color:rgba(#fff,0.9);
   font-size:$gamma;
+  .red & {
+    color:$solarized-red;
+  }
 }
 
 .Control__group {
@@ -193,25 +191,37 @@
   }
 }
 
-%playerBtn {
+%AnswerBtn {
   font-size:1.6rem;
   display:inline-block;
+  color:$yellow;
 }
 
-.PlayerBtn__wrong, .PlayerBtn__right {
+.AnswerBtn__wrong, .AnswerBtn__right {
   position:relative;
-  @extend %playerBtn;
+  @extend %AnswerBtn;
   @extend %btn;
   &:hover {
-  z-index:10;
-  
+    z-index:10;
   }
 }
 
-.PlayerBtn__wrong.btn-error, .PlayerBtn__right.btn-success {
+.AnswerBtn__wrong.selected, .AnswerBtn__right.selected {
   z-index:11;
 }
 
-.PlayerBtn__right {
+.AnswerBtn__right {
   margin-left:-1px;
+}
+
+.AnswerBtn__wrong.selected {
+  @extend .btn-error;
+}
+
+.AnswerBtn__right.selected {
+  @extend .btn-success;
+}
+
+.AnswerBtn__right.btn-disabled, .AnswerBtn__wrong.btn-disabled {
+  @extend .btn-disabled; 
 }

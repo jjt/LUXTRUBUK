@@ -86,6 +86,17 @@ class Game
       return true
     false
 
+  getPlayers: ()-> @players
+
+  playerResult: (player, answer, value)->
+    # Return if answer is neither 'right' nor 'wrong'
+    return if not answer
+    @players[player] += value * (if answer == 'right' then 1 else -1)
+
+  reportAnswers: (results, value) ->
+    for own k,v of results
+      @playerResult k, v, value
+
   start: ()->
     @_round = 1
 

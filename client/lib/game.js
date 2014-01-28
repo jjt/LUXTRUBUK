@@ -1,4 +1,5 @@
-var Game, cluesByCategory, cluesByRound, defaultPlayers, getClues, getRandomHash, log, sortCatGroup, sortToMiddle, sortToMiddleByLen, _;
+var Game, cluesByCategory, cluesByRound, defaultPlayers, getClues, getRandomHash, log, sortCatGroup, sortToMiddle, sortToMiddleByLen, _,
+  __hasProp = {}.hasOwnProperty;
 
 _ = require('lodash');
 
@@ -123,6 +124,28 @@ Game = (function() {
       return true;
     }
     return false;
+  };
+
+  Game.prototype.getPlayers = function() {
+    return this.players;
+  };
+
+  Game.prototype.playerResult = function(player, answer, value) {
+    if (!answer) {
+      return;
+    }
+    return this.players[player] += value * (answer === 'right' ? 1 : -1);
+  };
+
+  Game.prototype.reportAnswers = function(results, value) {
+    var k, v, _results;
+    _results = [];
+    for (k in results) {
+      if (!__hasProp.call(results, k)) continue;
+      v = results[k];
+      _results.push(this.playerResult(k, v, value));
+    }
+    return _results;
   };
 
   Game.prototype.start = function() {
