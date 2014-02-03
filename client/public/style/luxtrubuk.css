@@ -456,18 +456,27 @@ h1, h2, h3 {
     border: 1px solid #dc322f; }
 
 .newGame {
-  font-size: 1.2rem;
+  font-size: 1.6rem;
   margin: 0 auto; }
 
 .newGameRow {
   padding-top: 3rem;
   text-align: center; }
 
+.textCenter {
+  text-align: center; }
+
 .GameGrid {
   margin: 0 auto;
   background: #124566;
   position: relative;
-  min-height: 27.6rem; }
+  min-height: 27.6rem;
+  -webkit-transition: all 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+  -moz-transition: all 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: all 0.2s cubic-bezier(0.165, 0.84, 0.44, 1); }
+
+.GameGrid--gameover {
+  min-height: 12rem; }
 
 .gameBlock, .Category__title, .Clue {
   height: 4.2rem;
@@ -482,7 +491,7 @@ h1, h2, h3 {
   -ms-flex: 1;
   flex: 1; }
 
-.Category__title, .ClueDetail__title, .PlayerDisplay h4 {
+.Category__title, .ClueDetail__title, .PlayerDisplay .title {
   color: #7a9eb0; }
 
 .Category__title {
@@ -580,7 +589,7 @@ h1, h2, h3 {
   flex: 1;
   display: block;
   padding-top: 0.5rem; }
-  .PlayerDisplay h4 {
+  .PlayerDisplay .title {
     margin-top: 0.6em;
     margin-bottom: 0;
     text-transform: uppercase; }
@@ -588,12 +597,22 @@ h1, h2, h3 {
     color: #dc322f; }
 
 
+.PlayerDisplay--winner .title {
+  color: #ffe000; }
+
 .PlayerDisplay__score {
   margin: 0 0 0.8rem;
   color: rgba(255, 255, 255, 0.9);
   font-size: 1.6rem; }
   .red .PlayerDisplay__score {
     color: #dc322f; }
+
+.PlayerBar--gameover .PlayerDisplay {
+  font-size: 1.6rem; }
+.PlayerBar--gameover .PlayerDisplay__score {
+  font-size: 2.2rem; }
+.PlayerBar--gameover .PlayerDisplay--round {
+  display: none; }
 
 .Control__group {
   padding: 0 1rem; }
@@ -605,7 +624,8 @@ h1, h2, h3 {
     box-sizing: border-box; }
   .Control__group input {
     font-size: 1.6rem;
-    padding: 0.5rem; }
+    padding: 0.5rem;
+    text-align: center; }
   .Control__group a {
     display: inline-block;
     margin: 0 auto;
@@ -630,3 +650,10 @@ h1, h2, h3 {
 
 
 
+
+.GameResults {
+  text-align: center;
+  width: 100%;
+  padding-top: 1.5rem; }
+  .GameResults h1 {
+    text-transform: uppercase; }

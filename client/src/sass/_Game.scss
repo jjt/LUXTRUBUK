@@ -1,3 +1,8 @@
+.textCenter {
+  text-align: center;
+}
+
+
 .GameGrid {
   @extend %flexbox;
   margin:0 auto;
@@ -5,7 +10,13 @@
   position:relative;
   min-height:27.6rem;
   //box-shadow:0px 0 130px 0 rgba(#000, 0.1);
+  @include transition(all 0.2s cubic-bezier(0.165, 0.84, 0.44, 1));
 }
+
+.GameGrid--gameover {
+  min-height:12rem;
+}
+
 
 .gameBlock {
   //@include radial-gradient(circle at 0 0, #3b3ef7, #151EA2);
@@ -157,7 +168,7 @@
   @include flex(1);
   display:block;
   padding-top:0.5rem;
-  h4{
+  .title{
     margin-top:0.6em; 
     margin-bottom:0;
     @extend %titleStyle;
@@ -171,9 +182,16 @@
 }
 
 
-.PlayerDisplay--dummy {
+.PlayerDisplay--round {
   @include playerColor(darken($headerColor,15%));
 }
+
+.PlayerDisplay--winner {
+  .title {
+    color: $yellow;
+  }
+}
+
 
 .PlayerDisplay__score {
   margin:0 0 0.8rem;
@@ -183,6 +201,19 @@
     color:$solarized-red;
   }
 }
+
+.PlayerBar--gameover {
+  .PlayerDisplay {
+    font-size: $gamma;
+  }
+  .PlayerDisplay__score {
+    font-size:$beta; 
+  }
+  .PlayerDisplay--round {
+    display:none;
+  }
+}
+
 
 .Control__group {
   padding:0 1rem;
@@ -195,6 +226,7 @@
   input {
     font-size: $gamma;
     padding:0.5rem;
+    text-align: center;
   }
   a {
     display:inline-block;
@@ -241,4 +273,13 @@
 
 .FinalRound {
   @extend .ClueDetail; 
+}
+
+.GameResults {
+  text-align:center;
+  width:100%;
+  h1 {
+    text-transform: uppercase;
+  }
+  padding-top:1.5rem;
 }
