@@ -1,4 +1,4 @@
-var Game, cluesByCategory, cluesByRound, defaultPlayers, getClues, getRandomHash, log, sortCatGroup, sortToMiddle, sortToMiddleByLen, _,
+var Game, cluesByCategory, cluesByRound, defaultPlayers, getClues, getRandomHash, log, sortCatGroup, sortToMiddle, sortToMiddleByLen, ucFirst, _,
   __hasProp = {}.hasOwnProperty;
 
 _ = require('lodash');
@@ -67,18 +67,25 @@ cluesByCategory = function(clues, category) {
   });
 };
 
-defaultPlayers = {
-  Hortence: 0,
-  Edmund: 0,
-  Aloisius: 0
+ucFirst = function(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};
+
+defaultPlayers = function() {
+  return {
+    Hortence: 0,
+    Edmund: 0,
+    Aloisius: 0
+  };
 };
 
 Game = (function() {
   function Game(clues, players) {
     this.clues = clues;
-    this.players = players != null ? players : defaultPlayers;
+    this.players = players != null ? players : defaultPlayers();
     this.gamehash = this.clues[0].gamehash;
     this._round = 0;
+    return this;
   }
 
   Game.prototype.getClue = function(cluehash) {
@@ -119,7 +126,6 @@ Game = (function() {
     cluesLeft = _.filter(this.curClues(), {
       picked: void 0
     }).length;
-    console.log(this);
     if (cluesLeft <= 0) {
       this._round++;
       return true;
@@ -159,10 +165,26 @@ Game = (function() {
     return true;
   };
 
-  Game.prototype.getLeader = function() {
-    return _.chain(this.players).pairs().sortBy(function(pair) {
-      return pair[1];
-    }).last().value()[0];
+  Game.prototype.getTopScore = function() {
+    var topScoreFn;
+    topScoreFn = function(acc, val, key) {
+      if (val > acc) {
+        return val;
+      } else {
+        return acc;
+      }
+    };
+    return _.reduce(this.players, topScoreFn, 0);
+  };
+
+  Game.prototype.getLeaders = function() {
+    var topScore;
+    topScore = this.getTopScore();
+    return _.chain(this.players).pairs().filter(function(pair) {
+      return pair[1] === topScore;
+    }).map(function(pair) {
+      return pair[0];
+    }).value();
   };
 
   Game.prototype.start = function() {

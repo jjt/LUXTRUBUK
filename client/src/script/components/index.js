@@ -1,38 +1,39 @@
 /** @jsx React.DOM */
 Zepto(function(){
   var Luxtrubuk = require('./luxtrubuk.js');
-  var $app = document.getElementById('app');
+  var $app = $('#app');
   var gL = gameLib = require('../../../lib/game.js')();
 
   // Routes
   var home = function() {
-    $app.innerHTML = ['<h1>LUXTRUBUK lets good pals simulate JEOPARDY!&trade; games locally in a modern browser.</h1>'
+    $app.html([
+      '<h1>LUXTRUBUK lets good pals simulate JEOPARDY!&trade; games locally in a modern browser.</h1>'
       ,'<div class="newGameRow">'
       ,'<a href="#/game/new" data-route class="newGame">New Game</a>'
       ,'</div>'
-    ].join('')
+    ].join(''))
   }
 
   var gameRoute = function(gamehash) {
-    console.log('GAME ', gamehash);
     gL.getClues(gamehash, function(clues){
       gameObj = new gL.Game(clues);
-      gameObj.clues = gameObj.clues.map(function(el, index){
-        if(index < 59) el.picked = true;
+      gameObj.clues = gameObj.clues.map(function(el, index, arr){
+        if(index < arr.length - 2) el.picked = true;
         return el;
       });
       gameObj.start();
       gameObj.round(2);
+      $app.html('');
       React.renderComponent(
         Luxtrubuk( {game:gameObj}),
-        $app
+        $app[0]
       );
     });
   }
 
   var newGame = function() {
     $.ajax({
-      url: '/api/game/randomHash',
+      url: '/api/game/randomHash?' + Math.random(),
       success: function(data){
         router("#/game/" + data, 'Game #' +data);
       }
@@ -40,7 +41,7 @@ Zepto(function(){
   }
 
   var err404 = function() {
-    $app.innerHTML = '<h1>A better "status" symbol cannot be found</h1><h3>What is "404"?</h3>';
+    $app.html('<h1>A better "status" symbol cannot be found</h1><h3>What is "404"?</h3>');
   }
 
   var router = function(wlh, pushstate) {
@@ -64,7 +65,7 @@ Zepto(function(){
   }
 
   // Wire up events for all [data-route] elements
-  $('[data-route]').on('click', function (ev) {
+  $('body').on('click', '[data-route]', function (ev) {
     router(this.hash);
   });
 

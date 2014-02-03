@@ -13,6 +13,11 @@ var hexStr = function() {
 
 var gL = gameLib = require('../../../lib/game.js')();  
 
+var ucFirst = function (str) {
+  if(!_.isString(str))
+    return str;
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
 
 
 // ----------------------------------------------------------------------------
@@ -21,11 +26,22 @@ var gL = gameLib = require('../../../lib/game.js')();
 
 var PlayerDisplay = React.createClass({
   render: function () {
-    var className = "PlayerDisplay"
-    className += this.props.score < 0 ? " red" : ""; 
+    var cxPlayerDisplay = cx({
+      "PlayerDisplay": true
+    , "red": this.props.score < 0
+    , "PlayerDisplay--winner": this.props.winner
+    });
+    var cxIcon = cx({
+      'icon-award': true
+    , 'hide': !this.props.winner
+    });
     return(
-      <div className={className}>
-        <h4>{this.props.name}</h4>
+      <div className={cxPlayerDisplay}>
+        <div className="title">
+          <i className={cxIcon}></i>
+          {this.props.name}
+          <i className={cxIcon}></i>
+          </div>
         <p className="PlayerDisplay__score">${this.props.score}</p>
       </div>
     );
@@ -37,16 +53,20 @@ var PlayerBar = React.createClass({
     var playerIndex = 1,
       players = _.map(this.props.players, function (score, name) {
         return(<PlayerDisplay key={playerIndex++} name={name}
-          score={score}/>);
-      })
+          score={score} winner={_.contains(this.props.winners, name)}/>);
+      }, this)
     var round = this.props.round;
     if(round === 3) round = 'FINAL';
     if(round === 4) round = 'END';
     return(
-      <div className="PlayerBar">
+      <div className={cx({
+        PlayerBar: true
+      , 'PlayerBar--gameover': this.props.round > 3
+      , 'PlayerBar--winner': this.props.winner
+      })}>
         {players}
-        <div className="PlayerDisplay PlayerDisplay--dummy">
-          <h4>Round</h4>
+        <div className="PlayerDisplay PlayerDisplay--round">
+          <div className="title">Round</div>
           <p className="PlayerDisplay__score">{round}</p>
         </div>
       </div>
@@ -84,7 +104,6 @@ var FinalRound = React.createClass({
     _.forEach(this.refs, function (ref, index) {
       bids[index] = +ref.getDOMNode().value;
     });
-    console.log('FinalRound.onSubmit', bids);
     this.props.submitFinalBids(bids); 
     this.setState({hide: true});
   }
@@ -93,16 +112,20 @@ var FinalRound = React.createClass({
       <form className={cx({FinalRound: true, hide: this.state.hide})} 
         onSubmit={this.onSubmit}
       >
+        <h2>Final Round Category</h2>
         <h1>{this.props.clue.category}</h1>
         <div className="Controls">
           <div className="Control__group">
-            <input type="text" ref={this.props.playerKeys[0]}/>
+            <input type="text" ref={this.props.playerKeys[0]}
+              placeholder="0"/>
           </div>
           <div className="Control__group">
-            <input type="text" ref={this.props.playerKeys[1]}/>
+            <input type="text" ref={this.props.playerKeys[1]}
+              placeholder="0"/>
           </div>
           <div className="Control__group">
-            <input type="text" ref={this.props.playerKeys[2]}/>
+            <input type="text" ref={this.props.playerKeys[2]}
+              placeholder="0"/>
           </div>
           <div className="Control__group">
             <button type="submit" className="btn">Bid</button>
@@ -231,9 +254,8 @@ var ClueDetail = React.createClass({
     this.setState({showAnswer: true});
   }
 , submit: function(ev) { 
-    if(this.props.finalBids) {
+    if(this.props.finalBids)
       this.props.reportFinalAnswers(this.state.answers, this.props.finalBids);
-    }
     else
       this.props.reportAnswers(this.state.answers, this.props.clue.value);
     this.props.onClueClose();
@@ -257,7 +279,7 @@ var ClueDetail = React.createClass({
         <div className="ClueDetail__clue">{this.props.clue.clue}</div>
         <div className="ClueDetail__answerHolder">
           <div className={cx({"ClueDetail__answer":true,
-            show: this.state.showAnswer})}>{this.props.clue.answer}</div>
+            show: this.state.showAnswer})}>{ucFirst(this.props.clue.answer)}</div>
           <a className={cx({"ClueDetail__showAnswer":true,
             hide:this.state.showAnswer})} onClick={this.showAnswer}>
             Show Answer</a> 
@@ -288,9 +310,12 @@ var ClueDetail = React.createClass({
 var GameResults = React.createClass({
   render: function(){
     return (
-      <h2 className="GameResults">
-        {this.props.winner} is the winner!
-      </h2>  
+      <div className="GameResults">
+        <h1>
+          Thanks for playing!
+        </h1>  
+        <a href="#/game/new" data-route={true} className="newGame">New Game</a>
+      </div>
     );
   }
 });
@@ -335,7 +360,7 @@ var Game = React.createClass({
     })
   }
 , onClueClose: function() {
-    var state = this.getGameState();
+    var state = this.getInitialState();
     if(this.props.game.round() == 3)
       state.clue = state.clues[0].clues[0];
     this.setState(state);
@@ -351,7 +376,7 @@ var Game = React.createClass({
   }
 , getGameResultsComponent: function () {
     return(
-      <GameResults winner={this.props.game.getLeader()} />
+      <GameResults winner={this.props.game.getLeaders()} />
     );
 }
 , getGameComponent: function() {
@@ -368,7 +393,9 @@ var Game = React.createClass({
     var gameComponent = this.getGameComponent();
     return(
       <div className="Game">
-        <div className="GameGrid">
+        <div className={cx({GameGrid: true,
+          'GameGrid--gameover': this.state.round === 4})}
+        >
           <ClueDetail
             playerKeys={_.keys(this.state.players)}
             onClueClose={this.onClueClose}
@@ -381,7 +408,9 @@ var Game = React.createClass({
           {gameComponent} 
         </div>
         <PlayerBar players={this.state.players}
-          round={this.state.round} />
+          round={this.state.round}
+          winners={this.state.round < 4 ? [] : this.props.game.getLeaders()}
+        />
       </div>
     );
   }

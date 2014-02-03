@@ -39,17 +39,20 @@ cluesByRound = (clues, roundNum)->
 cluesByCategory = (clues, category)->
   _.filter clues, 'category': category
 
+ucFirst = (str)->
+  str.charAt(0).toUpperCase() + str.slice(1)
 
 
-defaultPlayers =
+defaultPlayers = ()->
   Hortence: 0
   Edmund: 0
   Aloisius: 0
 
 class Game
-  constructor: (@clues, @players = defaultPlayers)->
+  constructor: (@clues, @players = defaultPlayers())->
     @gamehash = @clues[0].gamehash
     @_round = 0
+    return this
 
   getClue: (cluehash)->
     if not cluehash?
@@ -82,13 +85,13 @@ class Game
 
   updateGame: ()->
     cluesLeft = _.filter(@curClues(), {picked: undefined}).length
-    console.log @
     if cluesLeft <= 0
       @_round++
       return true
     false
 
-  getPlayers: ()-> @players
+  getPlayers: ()->
+    @players
 
   playerResult: (player, answer, value)->
     # Return if answer is neither 'right' nor 'wrong'
@@ -106,13 +109,21 @@ class Game
     @round 4
     return true
 
-  getLeader: ()->
-    # Turn player scores into paired array, then sort and pull the name
-    _.chain(@players)
+  # Gets the top score
+  getTopScore: ()->
+    topScoreFn = (acc, val, key)->
+      if val > acc then val else acc
+    _.reduce @players, topScoreFn, 0
+
+  # Return all players with score equal to the top score
+  getLeaders: ()->
+    topScore = @getTopScore()
+    _.chain @players
       .pairs()
-      .sortBy((pair)-> pair[1])
-      .last()
-      .value()[0]
+      .filter (pair)->
+        pair[1] == topScore
+      .map (pair)-> pair[0]
+      .value()
 
   start: ()->
     @_round = 1
