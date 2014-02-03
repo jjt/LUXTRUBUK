@@ -6,14 +6,17 @@
 
 $blue: darken($solarized-blue, 25%);
 $yellow: #ffe000;
+$linkColor: $yellow;
 $bodyColor: desaturate(lighten($blue,50%), 40%);
-$headerColor: darken($bodyColor, 15%);
+$headerColor: desaturate(darken($bodyColor, 15%), 5%);
 $darkHeaderColor: darken($headerColor,15%);
 $darkestBlue: darken($headerColor, 30%);
 
 .hide {
   display:none !important;
 }
+
+$h1: 
 
 
 @import 'base';

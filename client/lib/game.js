@@ -119,6 +119,7 @@ Game = (function() {
     cluesLeft = _.filter(this.curClues(), {
       picked: void 0
     }).length;
+    console.log(this);
     if (cluesLeft <= 0) {
       this._round++;
       return true;
@@ -138,21 +139,40 @@ Game = (function() {
   };
 
   Game.prototype.reportAnswers = function(results, value) {
-    var k, v, _results;
-    _results = [];
+    var k, v;
     for (k in results) {
       if (!__hasProp.call(results, k)) continue;
       v = results[k];
-      _results.push(this.playerResult(k, v, value));
+      this.playerResult(k, v, value);
     }
-    return _results;
+    return this.updateGame();
+  };
+
+  Game.prototype.reportFinalAnswers = function(answers, bids) {
+    var k, v;
+    for (k in answers) {
+      if (!__hasProp.call(answers, k)) continue;
+      v = answers[k];
+      this.playerResult(k, v, bids[k]);
+    }
+    this.round(4);
+    return true;
+  };
+
+  Game.prototype.getLeader = function() {
+    return _.chain(this.players).pairs().sortBy(function(pair) {
+      return pair[1];
+    }).last().value()[0];
   };
 
   Game.prototype.start = function() {
     return this._round = 1;
   };
 
-  Game.prototype.round = function() {
+  Game.prototype.round = function(round) {
+    if (round) {
+      this._round = round;
+    }
     return this._round;
   };
 

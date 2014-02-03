@@ -40,6 +40,7 @@ cluesByCategory = (clues, category)->
   _.filter clues, 'category': category
 
 
+
 defaultPlayers =
   Hortence: 0
   Edmund: 0
@@ -81,6 +82,7 @@ class Game
 
   updateGame: ()->
     cluesLeft = _.filter(@curClues(), {picked: undefined}).length
+    console.log @
     if cluesLeft <= 0
       @_round++
       return true
@@ -96,11 +98,27 @@ class Game
   reportAnswers: (results, value) ->
     for own k,v of results
       @playerResult k, v, value
+    @updateGame()
+
+  reportFinalAnswers: (answers, bids)->
+    for own k,v of answers
+      @playerResult k, v, bids[k]
+    @round 4
+    return true
+
+  getLeader: ()->
+    # Turn player scores into paired array, then sort and pull the name
+    _.chain(@players)
+      .pairs()
+      .sortBy((pair)-> pair[1])
+      .last()
+      .value()[0]
 
   start: ()->
     @_round = 1
 
-  round: ()->
+  round: (round)->
+    if round then @_round = round
     @_round
 
 

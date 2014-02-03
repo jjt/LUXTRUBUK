@@ -3,6 +3,7 @@
   margin:0 auto;
   background:$blue;
   position:relative;
+  min-height:27.6rem;
   //box-shadow:0px 0 130px 0 rgba(#000, 0.1);
 }
 
@@ -78,6 +79,7 @@
   &.hide {
     display:none;
   }
+  @include transition(all 0.2s cubic-bezier(0.165, 0.84, 0.44, 1));
 }
 
 .ClueDetail__title {
@@ -183,6 +185,17 @@
 }
 
 .Control__group {
+  padding:0 1rem;
+  
+  button, input {
+    width: 100%;
+    font-size:$gamma;
+    @include box-sizing(border-box);
+  }
+  input {
+    font-size: $gamma;
+    padding:0.5rem;
+  }
   a {
     display:inline-block;
     margin:0 auto;
@@ -224,4 +237,8 @@
 
 .AnswerBtn__right.btn-disabled, .AnswerBtn__wrong.btn-disabled {
   @extend .btn-disabled; 
+}
+
+.FinalRound {
+  @extend .ClueDetail; 
 }

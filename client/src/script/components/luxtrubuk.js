@@ -39,14 +39,17 @@ var PlayerBar = React.createClass({displayName: 'PlayerBar',
         return(PlayerDisplay( {key:playerIndex++, name:name,
           score:score}));
       })
+    var round = this.props.round;
+    if(round === 3) round = 'FINAL';
+    if(round === 4) round = 'END';
     return(
       React.DOM.div( {className:"PlayerBar"}, 
         players,
         React.DOM.div( {className:"PlayerDisplay PlayerDisplay--dummy"}, 
           React.DOM.h4(null, "Round"),
-          React.DOM.p( {className:"PlayerDisplay__score"}, this.props.round)
+          React.DOM.p( {className:"PlayerDisplay__score"}, round)
         )
-      )  
+      )
     );
   }
 });
@@ -55,6 +58,60 @@ var PlayerBar = React.createClass({displayName: 'PlayerBar',
 // ----------------------------------------------------------------------------
 // GAME BOARD
 // ----------------------------------------------------------------------------
+
+var FinalRound = React.createClass({displayName: 'FinalRound',
+  getInitialState: function () {
+    return {
+      bids: _.zipObject(this.props.playerKeys, [0,0,0])
+    , hide: false
+    } 
+  }
+, getPlayerInputComponents: function (argument) {
+    return _.map(this.state.bids, function (value, key) {
+      return(FinalRoundBidInput( {key:key,
+        onInputChange:this.onInputChange, value:value} )
+      );
+    }, this);
+  }
+, onInputChange: function (key, value) {
+    var newPlayerBids = this.state.bids;
+    newPlayerBids[key] = value;
+    this.setState({playerBids: newPlayerBids});
+}
+, onSubmit: function (ev) {
+    ev.preventDefault();
+    var bids = {}
+    _.forEach(this.refs, function (ref, index) {
+      bids[index] = +ref.getDOMNode().value;
+    });
+    console.log('FinalRound.onSubmit', bids);
+    this.props.submitFinalBids(bids); 
+    this.setState({hide: true});
+  }
+, render: function(){
+    return(
+      React.DOM.form( {className:cx({FinalRound: true, hide: this.state.hide}), 
+        onSubmit:this.onSubmit}
+      , 
+        React.DOM.h1(null, this.props.clue.category),
+        React.DOM.div( {className:"Controls"}, 
+          React.DOM.div( {className:"Control__group"}, 
+            React.DOM.input( {type:"text", ref:this.props.playerKeys[0]})
+          ),
+          React.DOM.div( {className:"Control__group"}, 
+            React.DOM.input( {type:"text", ref:this.props.playerKeys[1]})
+          ),
+          React.DOM.div( {className:"Control__group"}, 
+            React.DOM.input( {type:"text", ref:this.props.playerKeys[2]})
+          ),
+          React.DOM.div( {className:"Control__group"}, 
+            React.DOM.button( {type:"submit", className:"btn"}, "Bid")
+          )
+        )
+      )
+    )
+  }
+});
 
 var Clue = React.createClass({displayName: 'Clue',
   getInitialState: function() {
@@ -89,13 +146,15 @@ var Category = React.createClass({displayName: 'Category',
   clueClick: function(clueHash){
     this.props.clueClick(clueHash);
   }
+, getClueComponents: function () {
+    return _.map(this.props.clues, function(clue, index) {
+        var value = this.props.round * (index+1) * 200;
+        return (Clue( {key:clue.cluehash, picked:clue.picked,
+          clueClick:this.clueClick, value:value} ));
+    },this);
+  }
 , render: function() {
-    var clueComponents = _.map(this.props.clues, function(clue, index) {
-          console.log(index);
-          var value = this.props.round * (index+1) * 200;
-          return (Clue( {key:clue.cluehash, picked:clue.picked,
-            clueClick:this.clueClick, value:value} ));
-      },this);
+    var clueComponents = this.getClueComponents();
     return(
       React.DOM.div( {className:"Category"}, 
         React.DOM.div( {className:"Category__title"}, 
@@ -171,13 +230,18 @@ var ClueDetail = React.createClass({displayName: 'ClueDetail',
 , showAnswer: function() {
     this.setState({showAnswer: true});
   }
-, submit: function(ev) {
-    this.props.reportAnswers(this.state.answers, this.props.clue.value);
+, submit: function(ev) { 
+    if(this.props.finalBids) {
+      this.props.reportFinalAnswers(this.state.answers, this.props.finalBids);
+    }
+    else
+      this.props.reportAnswers(this.state.answers, this.props.clue.value);
     this.props.onClueClose();
   }
 , reportAnswer: function(player, answer) {
-    this.state.answers[player] = answer;
-    this.forceUpdate();
+    var newState = this.state;
+    newState.answers[player] = answer;
+    this.setState(newState);
   }
 , getAnsBtnComponents: function() {
     return _.map(this.state.answers, function(answer, name) {
@@ -185,7 +249,7 @@ var ClueDetail = React.createClass({displayName: 'ClueDetail',
         key:name, answer:answer, disabled:!this.state.showAnswer} )
       ) 
     }, this);
-}
+  }
 , render: function () {
     return(
       React.DOM.div( {className:cx({ClueDetail: true, hide: !this.props.showClueDetail})}, 
@@ -218,6 +282,18 @@ var ClueDetail = React.createClass({displayName: 'ClueDetail',
 });
 
 
+// ----------------------------------------------------------------------------
+// GAME RESULTS
+// ----------------------------------------------------------------------------
+var GameResults = React.createClass({displayName: 'GameResults',
+  render: function(){
+    return (
+      React.DOM.h2( {className:"GameResults"}, 
+        this.props.winner, " is the winner! "
+      )  
+    );
+  }
+});
 
 
 
@@ -231,6 +307,7 @@ var Game = React.createClass({displayName: 'Game',
       players: this.props.game.getPlayers()
     , round: this.props.game.round()
     , clues: this.props.game.curCluesByCat()
+    , finalBids: false
     }
   }
 , getInitialState: function() {
@@ -242,8 +319,13 @@ var Game = React.createClass({displayName: 'Game',
 , showClueDetail: function(clue) {
   }
 , reportAnswers: function(results, value) {
-    console.log(results, value); 
-    this.props.game.reportAnswers(results, value);
+    if(this.props.game.reportAnswers(results, value)) {
+      this.setState(this.getInitialState());
+    }
+  }
+, reportFinalAnswers: function(answers, bids) {
+    this.props.game.reportFinalAnswers(answers, bids);
+    this.setState(this.getInitialState())
   }
 , clueClick: function(cluehash) {
     clue = this.props.game.pickClue(cluehash);
@@ -253,13 +335,37 @@ var Game = React.createClass({displayName: 'Game',
     })
   }
 , onClueClose: function() {
-    this.setState({players: this.props.game.getPlayers(), showClueDetail: false})
+    var state = this.getGameState();
+    if(this.props.game.round() == 3)
+      state.clue = state.clues[0].clues[0];
+    this.setState(state);
   }
-, render: function() {
-    var categoryComponents = _.map(this.state.clues, function(categoryObj) {
+, submitFinalBids: function (bids) {
+    this.setState({finalBids: bids, showClueDetail: true});
+  }
+, getFinalRoundComponent: function() {
+    return(FinalRound( {clue:this.state.clue,
+        clueClick:this.clueClick, playerKeys:_.keys(this.state.players),
+        submitFinalBids:this.submitFinalBids} )
+    );
+  }
+, getGameResultsComponent: function () {
+    return(
+      GameResults( {winner:this.props.game.getLeader()} )
+    );
+}
+, getGameComponent: function() {
+    if(this.state.round === 3)
+      return this.getFinalRoundComponent();
+    if(this.state.round === 4)
+      return this.getGameResultsComponent();
+    return _.map(this.state.clues, function(categoryObj) {
           return (Category( {key:categoryObj.cat, clues:categoryObj.clues,
             round:this.state.round, clueClick:this.clueClick} ));
       }, this);
+  }
+, render: function() {
+    var gameComponent = this.getGameComponent();
     return(
       React.DOM.div( {className:"Game"}, 
         React.DOM.div( {className:"GameGrid"}, 
@@ -267,13 +373,15 @@ var Game = React.createClass({displayName: 'Game',
             {playerKeys:_.keys(this.state.players),
             onClueClose:this.onClueClose,
             reportAnswers:this.reportAnswers,
+            reportFinalAnswers:this.reportFinalAnswers,
             clue:this.state.clue,
-            showClueDetail:this.state.showClueDetail}
+            showClueDetail:this.state.showClueDetail,
+            finalBids:this.state.finalBids}
           ),
-          categoryComponents 
+          gameComponent 
         ),
         PlayerBar( {players:this.state.players,
-          round:this.props.game.round()} )
+          round:this.state.round} )
       )
     );
   }

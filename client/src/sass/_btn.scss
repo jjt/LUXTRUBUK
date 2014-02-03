@@ -2,6 +2,8 @@
   padding:0.4em 1em;
   display:inline-block;
   border:1px solid $headerColor;
+  background:none;
+  color: $linkColor;
   cursor: pointer;
   line-height:1;
   @include transition(all 0.2s cubic-bezier(0.165, 0.84, 0.44, 1));
@@ -9,6 +11,10 @@
 
 %btn:hover{
   border:1px solid $yellow;
+}
+
+.btn {
+  @extend %btn;
 }
 
 .btn-disabled{
