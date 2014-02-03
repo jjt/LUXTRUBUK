@@ -4,6 +4,8 @@ pg = require('pg');
 
 constring = require('./config.LOCAL').constring;
 
+pg.defaults.poolSize = 2;
+
 clientConnect = function(next) {
   if (next == null) {
     next = function() {};
@@ -14,7 +16,7 @@ clientConnect = function(next) {
       console.log(err);
       return next(err);
     }
-    return next(err, client);
+    return next(err, client, done);
   });
 };
 
@@ -22,15 +24,14 @@ runQuery = function(err, query, next) {
   if (next == null) {
     next = function() {};
   }
-  return clientConnect(function(err, client) {
+  return clientConnect(function(err, client, done) {
     return client.query(query, function(err, result) {
       if (err) {
         console.log(err);
         return next(err);
       }
       client.end();
-      console.log("QUERY " + query);
-      console.log("QUERY RESULTS " + (JSON.stringify(result.rows)));
+      done(1);
       return next(err, result);
     });
   });
@@ -45,7 +46,7 @@ getGame = function(err, gamehash, next) {
     return;
   }
   fields = "clue, answer, value, category, round, cluehash";
-  query = "SELECT " + fields + " FROM clues_flat WHERE gamehash='" + gamehash + "'    ORDER BY round, category, value";
+  query = "SELECT " + fields + " FROM clues_flat WHERE gamehash='" + gamehash + "' ORDER BY round, category, value";
   return runQuery(err, query, function(err, result) {
     if (err) {
       console.log("getGAME ERROR");
@@ -73,7 +74,6 @@ getRandomGameHash = function(err, next) {
   offset = "random() * (SELECT count(*) FROM clues_flat)";
   query = "SELECT gamehash FROM clues_flat OFFSET " + offset + " LIMIT 1";
   return runQuery(err, query, function(err, result) {
-    console.log("gRGH: " + (JSON.stringify(result.rows)));
     return next(err, result.rows[0].gamehash);
   });
 };

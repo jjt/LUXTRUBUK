@@ -1,5 +1,6 @@
 pg = require 'pg'
 constring = require('./config.LOCAL').constring
+pg.defaults.poolSize = 2
 
 clientConnect = (next = ()->) ->
   pg.connect constring, (err, client, done) ->
@@ -7,17 +8,16 @@ clientConnect = (next = ()->) ->
       console.log "clientConnect ERROR"
       console.log err
       return next err
-    next(err, client)
+    next(err, client, done)
 
 runQuery = (err, query, next = ()->) ->
-  clientConnect (err, client) ->
+  clientConnect (err, client, done) ->
     client.query query, (err, result) ->
       if err
         console.log err
         return next err
       client.end()
-      console.log "QUERY #{query}"
-      console.log "QUERY RESULTS #{JSON.stringify result.rows}"
+      done(1)
       next(err, result)
   
 
@@ -29,7 +29,6 @@ runQuery = (err, query, next = ()->) ->
         #console.log err
         #return next err
       #client.end()
-      #console.log "RANDOM GAME ID #{result.rows[0].game}"
       #next(err, result.rows[0].game)
 
 getGame = (err, gamehash, next = ()->) ->
@@ -52,7 +51,6 @@ getRandomGameHash = (err, next = ()->) ->
   offset = "random() * (SELECT count(*) FROM clues_flat)"
   query = "SELECT gamehash FROM clues_flat OFFSET #{offset} LIMIT 1"
   runQuery err, query, (err, result) ->
-    console.log "gRGH: #{JSON.stringify result.rows}"
     next err, result.rows[0].gamehash
 
 module.exports =
