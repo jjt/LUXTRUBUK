@@ -15,5 +15,6 @@ app.get '/api/game/:gamehash', (req, res) ->
   api.getGame null, req.params.gamehash, (err, game) ->
     res.send JSON.stringify game
 
-app.listen 3000
-console.log 'LUXTRUBUK UP IN IT!'
+port = +process.env.PORT || 3000
+app.listen port, ()->
+  console.log "LUXTRUBUK UP IN IT ON PORT #{port}"

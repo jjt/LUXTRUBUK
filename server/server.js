@@ -1,4 +1,4 @@
-var api, app, express;
+var api, app, express, port;
 
 express = require('express');
 
@@ -24,6 +24,8 @@ app.get('/api/game/:gamehash', function(req, res) {
   });
 });
 
-app.listen(3000);
+port = +process.env.PORT || 3000;
 
-console.log('LUXTRUBUK UP IN IT!');
+app.listen(port, function() {
+  return console.log("LUXTRUBUK UP IN IT ON PORT " + port);
+});
