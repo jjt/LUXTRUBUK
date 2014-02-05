@@ -7,7 +7,7 @@ getClues = (gamehash, next)->
   gameKey = "game-" + gamehash
   localGame = localStorage.getItem(gameKey)
   return next(JSON.parse(localGame)) if localGame
-  $.getJSON "/api/game/" + gamehash, (data)->
+  $.getJSON "/data/games/#{gamehash}.json", (data)->
     localStorage.setItem "game-" + gamehash, JSON.stringify(data)
     next data
 

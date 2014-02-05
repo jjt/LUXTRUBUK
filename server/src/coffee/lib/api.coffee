@@ -1,4 +1,5 @@
 pg = require 'pg'
+Promise = require('bluebird')
 constring = require('./config.LOCAL').constring
 pg.defaults.poolSize = 2
 
@@ -19,7 +20,19 @@ runQuery = (err, query, next = ()->) ->
       client.end()
       done(1)
       next(err, result)
-  
+
+
+getAllClues = (err, next = ()->)->
+  fields = "clue, answer, value, category, round, cluehash"
+  query = "SELECT #{fields} FROM clues_flat ORDER BY round, category, value"
+  runQuery err, query, (err, result)->
+    next err, result?.rows
+
+
+getGameHashes = (err, next = ()->)->
+  query = "select gamehash from clues_flat group by gamehash order by gamehash"
+  runQuery err, query, (err, result)->
+    next err, result?.rows.map((obj)->obj.gamehash)
 
 #getRandomGameId = (err, next = ()->) ->
   #offset = "random() * (SELECT count(*) FROM clues_flat)"
@@ -34,7 +47,7 @@ runQuery = (err, query, next = ()->) ->
 getGame = (err, gamehash, next = ()->) ->
   return if not gamehash?
   fields = "clue, answer, value, category, round, cluehash"
-  query ="SELECT #{fields} FROM clues_flat WHERE gamehash='#{gamehash}'
+  query = "SELECT #{fields} FROM clues_flat WHERE gamehash='#{gamehash}'
     ORDER BY round, category, value"
   runQuery err, query, (err, result) ->
     if err
@@ -54,6 +67,5 @@ getRandomGameHash = (err, next = ()->) ->
     next err, result.rows[0].gamehash
 
 module.exports =
-  getGame: getGame
-  getRandomGame: getRandomGame
-  getRandomGameHash: getRandomGameHash
+  {getGame, getRandomGame, getRandomGameHash, getGameHashes, getAllClues}
+

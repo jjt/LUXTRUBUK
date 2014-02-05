@@ -1,2 +1,3 @@
 *.LOCAL.*
 bower_components
+client/public/data/

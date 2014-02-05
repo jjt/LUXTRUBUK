@@ -18,7 +18,8 @@
   "homepage": "https://github.com/jjt/LUXTRUBUK",
   "dependencies": {
     "express": "~3.4.7",
-    "pg": "~2.11.0"
+    "pg": "~2.11.0",
+    "bluebird": "~1.0.1"
   },
   "devDependencies": {
     "gulp-util": "~2.2.9",
@@ -40,6 +41,8 @@
     "chai-fs": "0.0.3",
     "prettyjson": "~0.10.0",
     "gulp-livereload": "~0.2.0",
-    "tiny-lr": "0.0.5"
+    "tiny-lr": "0.0.5",
+    "async": "~0.2.10",
+    "bluebird": "~1.0.1"
   }
 }

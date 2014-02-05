@@ -1,6 +1,8 @@
-var clientConnect, constring, getGame, getRandomGame, getRandomGameHash, pg, runQuery;
+var Promise, clientConnect, constring, getAllClues, getGame, getGameHashes, getRandomGame, getRandomGameHash, pg, runQuery;
 
 pg = require('pg');
+
+Promise = require('bluebird');
 
 constring = require('./config.LOCAL').constring;
 
@@ -34,6 +36,31 @@ runQuery = function(err, query, next) {
       done(1);
       return next(err, result);
     });
+  });
+};
+
+getAllClues = function(err, next) {
+  var fields, query;
+  if (next == null) {
+    next = function() {};
+  }
+  fields = "clue, answer, value, category, round, cluehash";
+  query = "SELECT " + fields + " FROM clues_flat ORDER BY round, category, value";
+  return runQuery(err, query, function(err, result) {
+    return next(err, result != null ? result.rows : void 0);
+  });
+};
+
+getGameHashes = function(err, next) {
+  var query;
+  if (next == null) {
+    next = function() {};
+  }
+  query = "select gamehash from clues_flat group by gamehash order by gamehash";
+  return runQuery(err, query, function(err, result) {
+    return next(err, result != null ? result.rows.map(function(obj) {
+      return obj.gamehash;
+    }) : void 0);
   });
 };
 
@@ -81,5 +108,7 @@ getRandomGameHash = function(err, next) {
 module.exports = {
   getGame: getGame,
   getRandomGame: getRandomGame,
-  getRandomGameHash: getRandomGameHash
+  getRandomGameHash: getRandomGameHash,
+  getGameHashes: getGameHashes,
+  getAllClues: getAllClues
 };

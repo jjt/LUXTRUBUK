@@ -7,11 +7,21 @@ Zepto(function(){
   // Routes
   var home = function() {
     $app.html([
-      '<h1>LUXTRUBUK lets good pals simulate JEOPARDY!&trade; games locally in a modern browser.</h1>'
-      ,'<div class="newGameRow">'
-      ,'<a href="#/game/new" data-route class="newGame">New Game</a>'
-      ,'</div>'
+      '<h1>LUXTRUBUK lets good pals simulate JEOPARDY!&trade; '
+    , 'games locally in a modern browser.</h1>'
+    , '<div class="newGameRow">'
+    , '<a href="#/game/new" data-route class="newGame">New Game</a>'
+    , '</div>'
     ].join(''))
+  }
+
+  var newGame = function() {
+    $.ajax({
+      url: '/api/game/randomHash?' + Math.random(),
+      success: function(data){
+        router("#/game/" + data, 'Game #' +data);
+      }
+    }); 
   }
 
   var gameRoute = function(gamehash) {
@@ -30,14 +40,6 @@ Zepto(function(){
     });
   }
 
-  var newGame = function() {
-    $.ajax({
-      url: '/api/game/randomHash?' + Math.random(),
-      success: function(data){
-        router("#/game/" + data, 'Game #' +data);
-      }
-    }); 
-  }
 
   var err404 = function() {
     $app.html('<h1>A better "status" symbol cannot be found</h1><h3>What is "404"?</h3>');

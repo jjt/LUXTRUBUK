@@ -1,27 +1,21 @@
-var api, app, express, port;
+var app, dir, express, port, _;
 
 express = require('express');
 
-api = require('./lib/api');
+_ = require('lodash');
+
+dir = process.cwd();
 
 app = express();
 
+console.log(dir);
+
 app.get('/api/game/randomHash', function(req, res) {
-  return api.getRandomGameHash(null, function(err, hash) {
-    return res.send(hash);
-  });
+  return res.send(_.sample(require('./lib/gameHashes')));
 });
 
-app.get('/api/game/random', function(req, res) {
-  return api.getRandomGameHash(null, function(err, hash) {
-    return res.redirect("/api/game/" + hash);
-  });
-});
-
-app.get('/api/game/:gamehash', function(req, res) {
-  return api.getGame(null, req.params.gamehash, function(err, game) {
-    return res.send(JSON.stringify(game));
-  });
+app.configure(function() {
+  return app.use(express["static"]("" + dir + "/client/public"));
 });
 
 port = +process.env.PORT || 3000;

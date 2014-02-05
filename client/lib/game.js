@@ -14,7 +14,7 @@ getClues = function(gamehash, next) {
   if (localGame) {
     return next(JSON.parse(localGame));
   }
-  return $.getJSON("/api/game/" + gamehash, function(data) {
+  return $.getJSON("/data/games/" + gamehash + ".json", function(data) {
     localStorage.setItem("game-" + gamehash, JSON.stringify(data));
     return next(data);
   });
