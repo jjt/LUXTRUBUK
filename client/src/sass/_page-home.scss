@@ -1,3 +1,6 @@
+.loading {
+  text-align: center;
+}
 .newGame {
   @extend %btn;
   font-size:$gamma;
@@ -10,3 +13,6 @@
   text-align: center;
 }
 
+.HomePage p {
+  @extend .delta;
+}

@@ -1,18 +1,13 @@
 /** @jsx React.DOM */
 Zepto(function(){
   var Luxtrubuk = require('./luxtrubuk.js');
+  var HomePage = require('./homePage.js');
   var $app = $('#app');
   var gL = gameLib = require('../../../lib/game.js')();
 
   // Routes
   var home = function() {
-    $app.html([
-      '<h1>LUXTRUBUK lets good pals simulate JEOPARDY!&trade; '
-    , 'games locally in a modern browser.</h1>'
-    , '<div class="newGameRow">'
-    , '<a href="#/game/new" data-route class="newGame">New Game</a>'
-    , '</div>'
-    ].join(''))
+    React.renderComponent(<HomePage />, $app[0]);
   }
 
   var newGame = function() {

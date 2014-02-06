@@ -11,7 +11,8 @@ var hexStr = function() {
   return Math.random().toString(16).slice(2,10);
 }
 
-var gL = gameLib = require('../../../lib/game.js')();  
+var gameLib = require('../../../lib/game.js')(),
+    gL;
 
 var ucFirst = function (str) {
   if(!_.isString(str))
@@ -416,12 +417,12 @@ var Game = React.createClass({
   }
 });
 
-var Luxtrubuk = React.createClass({
-  render: function() {
-    return(
-      <Game game={this.props.game} />
-    );
-  }
-});
+//var Luxtrubuk = React.createClass({
+  //render: function() {
+    //return(
+      //<Game game={this.props.game} />
+    //);
+  //}
+//});
 
 module.exports = Game;

@@ -29,4 +29,13 @@ h1,h2,h3 {
 $alpha: 2.6rem;
 $beta: 2.2rem;
 $gamma: 1.6rem;
+$delta: 1.25rem;
+$epsilon: 1rem;
 $zeta: 0.75rem;
+
+.alpha {font-size: $alpha;}
+.beta {font-size: $beta;}
+.gamma {font-size: $gamma;}
+.delta {font-size: $delta;}
+.epsilon {font-size: $epsilon;}
+.zeta {font-size: $zeta;}

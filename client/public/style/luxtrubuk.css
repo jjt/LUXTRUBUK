@@ -389,6 +389,24 @@ h1, h2, h3, h4 {
 h1, h2, h3 {
   color: #86aabe; }
 
+.alpha {
+  font-size: 2.6rem; }
+
+.beta {
+  font-size: 2.2rem; }
+
+.gamma {
+  font-size: 1.6rem; }
+
+.delta, .HomePage p {
+  font-size: 1.25rem; }
+
+.epsilon {
+  font-size: 1rem; }
+
+.zeta {
+  font-size: 0.75rem; }
+
 .Category__title, .Clue, .ClueDetail__answerHolder, .PlayerBar {
   justify-content: center;
   align-items: center;
@@ -399,7 +417,8 @@ h1, h2, h3 {
   margin: 0 auto; }
 
 #app {
-  position: relative; }
+  position: relative;
+  min-height: 25rem; }
 
 .siteHeader {
   text-align: center; }
@@ -414,10 +433,12 @@ h1, h2, h3 {
       color: #ffe000;
       text-decoration: none; }
 
-footer p {
-  font-size: 0.75rem;
-  text-align: center;
-  color: #7a9eb0; }
+footer {
+  padding-top: 1.5rem; }
+  footer p {
+    font-size: 0.75rem;
+    text-align: center;
+    color: #7a9eb0; }
 
 .btn, .btn-success, .btn-error, .newGame, .ClueDetail__showAnswer, .ClueDetail__done, .Control__group a, .AnswerBtn__wrong, .AnswerBtn__right {
   padding: 0.4em 1em;
@@ -460,6 +481,9 @@ footer p {
     background: #dc322f;
     border: 1px solid #dc322f; }
 
+.loading {
+  text-align: center; }
+
 .newGame {
   font-size: 1.6rem;
   margin: 0 auto; }
@@ -468,6 +492,7 @@ footer p {
   padding-top: 3rem;
   padding-bottom: 3rem;
   text-align: center; }
+
 
 .textCenter {
   text-align: center; }

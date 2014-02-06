@@ -13,7 +13,9 @@
 #app {
   @extend .siteWide;
   position:relative;
+  min-height: 25rem;
 }
+
 .siteHeader {
   text-align:center;
   .headerBlock {
@@ -33,6 +35,7 @@
 
 footer {
   @extend .siteWide; 
+  padding-top:1.5rem;
   p {
     font-size:$zeta;
     text-align: center;

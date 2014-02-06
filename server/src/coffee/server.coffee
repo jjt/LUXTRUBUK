@@ -1,15 +1,16 @@
 express = require 'express'
+config = require('./lib/config')(process)
 _ = require 'lodash'
+
 
 dir = process.cwd()
 app = express()
 
-console.log dir
 app.get '/api/game/randomHash', (req, res)->
   res.send _.sample require('./lib/gameHashes')
 
 app.configure ()->
-  app.use express.static("#{dir}/client/public")
+  app.use express.static(config.staticDir)
 
 #app.get '/api/game/random', (req, res) ->
   #api.getRandomGameHash null, (err, hash)->
