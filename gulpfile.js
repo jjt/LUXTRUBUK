@@ -108,9 +108,7 @@ var buildDeps = [
   'copy',
   'usemin'
 ];
-gulp.task('build', buildDeps, function() { 
-
-});	
+gulp.task('build', buildDeps);
 
 
 // Shortcut for
