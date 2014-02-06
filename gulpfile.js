@@ -5,11 +5,13 @@ var coffee = require('gulp-coffee');
 var concat = require('gulp-concat');
 var rename = require('gulp-rename');
 var uglify = require('gulp-uglify');
+var usemin = require('gulp-usemin');
 var chalk = require('chalk');
 var clean = require('gulp-clean');
 var gutil = require('gulp-util');
 var mocha = require('gulp-mocha');
 var react = require('gulp-react');
+var rename = require('gulp-rename');
 var gulp = require('gulp');
 var sass = require('gulp-sass');
 var _ = require('lodash');
@@ -25,31 +27,28 @@ var error = function(err) {
 // COFFEE
 var coffeeTaskFn = function(src, dest) {
   return function() {
-    gulp.src(src)
+    return gulp.src(src)
       .pipe(coffee({bare:true}).on('error', error))
-      .pipe(gulp.dest(dest))
-      .pipe(livereload(server));
+      .pipe(gulp.dest(dest));
   }
 }
 gulp.task('coffeeMain', coffeeTaskFn('src', './'));
 gulp.task('coffeeClient', coffeeTaskFn('client/src/coffee/**/*.coffee', 'client'));
 gulp.task('coffeeServer', coffeeTaskFn('server/src/coffee/**/*.coffee', 'server'));
 
-
 // REACT JSX COMPILATION
 gulp.task('react', function() {
-  gulp.src('client/src/jsx/**/*.jsx')
+  return gulp.src('client/src/jsx/**/*.jsx')
     .pipe(react().on('error', error))
-    .pipe(gulp.dest('client/src/script/components'))
-    .pipe(livereload(server));
+    .pipe(gulp.dest('client/src/script/components'));
 });	
 
 // BROWSERIFY
 gulp.task('browserify', function () {
-  gulp.src('client/src/script/components/index.js') 
+  return gulp.src('client/src/script/components/index.js') 
     .pipe(browserify({debug: true}).on('error', error))
-    .pipe(gulp.dest('client/public/script'))
-    .pipe(livereload(server));
+    .pipe(rename('luxtrubuk.js'))
+    .pipe(gulp.dest('client/public/script'));
 });
 
 // SASS COMPILATION
@@ -59,8 +58,7 @@ gulp.task('sass', function() {
       sass({includePaths: ['client/src/sass', 'client/public/bower_components']})
         .on('error', error)
     )
-    .pipe(gulp.dest('client/public/style'))
-    .pipe(livereload(server));
+    .pipe(gulp.dest('client/public/style'));
 });	
 
 // BACKEND SERVER
@@ -79,6 +77,41 @@ gulp.task('lrServe', function() {
     if(err) return console.log(err);
   });
 });	
+
+
+// BUILD
+gulp.task('clean', function() {
+  return gulp.src('./dist', {read: false, force: true})
+    .pipe(clean());
+});	
+
+
+gulp.task('copy', function() {
+  return gulp.src('./client/public/**/*')  
+    .pipe(gulp.dest('./dist'));
+});	
+
+gulp.task('usemin', function() {
+  return gulp.src('./client/public/index.html') 
+    .pipe(usemin())
+    .pipe(gulp.dest('./dist'));
+});	
+
+var buildDeps = [
+  'clean',
+  //'coffeeServer',
+  //'coffeeClient',
+  //'coffeeMain',
+  //'sass',
+  //'react',
+  //'browserify',
+  'copy',
+  'usemin'
+];
+gulp.task('build', buildDeps, function() { 
+
+});	
+
 
 // Shortcut for
 // gulp.watch(src, function() {

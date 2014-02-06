@@ -394,7 +394,7 @@ h1, h2, h3 {
   align-items: center;
   text-align: center; }
 
-.siteWide, #app {
+.siteWide, #app, footer {
   max-width: 50rem;
   margin: 0 auto; }
 
@@ -413,6 +413,11 @@ h1, h2, h3 {
     .siteHeader h1 a {
       color: #ffe000;
       text-decoration: none; }
+
+footer p {
+  font-size: 0.75rem;
+  text-align: center;
+  color: #7a9eb0; }
 
 .btn, .btn-success, .btn-error, .newGame, .ClueDetail__showAnswer, .ClueDetail__done, .Control__group a, .AnswerBtn__wrong, .AnswerBtn__right {
   padding: 0.4em 1em;
@@ -461,6 +466,7 @@ h1, h2, h3 {
 
 .newGameRow {
   padding-top: 3rem;
+  padding-bottom: 3rem;
   text-align: center; }
 
 .textCenter {

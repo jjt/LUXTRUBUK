@@ -2,7 +2,7 @@
   "name": "LUXTRUBUK",
   "version": "0.0.0",
   "description": "LUXTRUBUK lets good buds simulate Jeopardy",
-  "main": "index.js",
+  "main": "luxtrubuk.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -46,6 +46,7 @@
     "bluebird": "~1.0.1",
     "gulp-uglify": "~0.2.0",
     "gulp-rename": "~0.2.2",
-    "gulp-clean": "~0.2.4"
+    "gulp-clean": "~0.2.4",
+    "gulp-usemin": "~0.1.3"
   }
 }

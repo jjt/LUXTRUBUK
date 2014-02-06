@@ -4,10 +4,6 @@
   <title>LUXTRUBUK</title>
   <link rel="stylesheet" href="/style/luxtrubuk.css" type="text/css" media="all" />  
   <link rel="stylesheet" href="/fontello/css/fontello.css" type="text/css" media="all" />
-  <script>document.write('<script src="http://'
-    + (location.host || 'localhost').split(':')[0]
-    + ':35729/livereload.js"></'
-    + 'script>')</script>
 </head>
 <body>
   <header class="siteHeader">
@@ -21,9 +17,20 @@
       <a href="#/game/new" data-route class="newGame">New Game</a>
     </div>
   </div>
+  <footer>
+    <p>Made by <a href="http://jjt.io">Jason Trill</a>. All trademarks and
+      rights are those of their owners, with whom LUXTRUBUK has no association.
+    </p>
+  </footer>
+
+  <!-- build:js script/vendor.min.js -->
   <script src="/bower_components/lodash/dist/lodash.js"></script>
   <script src="/bower_components/zepto/zepto.js"></script>
   <script src="/bower_components/react/react-with-addons.js"></script>
-  <script src="/script/index.js"></script>
+  <!-- endbuild -->
+
+  <!-- build:js script/luxtrubuk.min.js -->
+  <script src="/script/luxtrubuk.js"></script>
+  <!-- endbuild -->
 </body>
 </html>

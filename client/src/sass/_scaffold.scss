@@ -31,3 +31,11 @@
   }
 }
 
+footer {
+  @extend .siteWide; 
+  p {
+    font-size:$zeta;
+    text-align: center;
+    color:$headerColor;
+  }
+}
