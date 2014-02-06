@@ -130,8 +130,7 @@ gulp.task('clean', function() {
 });	
 
 gulp.task('copy', function() {
-  return gulp.src(['./client/public/**/*', './server/server.js',
-    './server/lib/**/*.js'])  
+  return gulp.src(['./client/public/**/*', './server/**/*.js'])  
     .pipe(gulp.dest('./dist'));
 });	
 
