@@ -19,7 +19,8 @@
   "dependencies": {
     "express": "~3.4.7",
     "pg": "~2.11.0",
-    "bluebird": "~1.0.1"
+    "bluebird": "~1.0.1",
+    "gulp": "~3.5.2"
   },
   "devDependencies": {
     "gulp-util": "~2.2.9",

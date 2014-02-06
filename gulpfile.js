@@ -98,7 +98,7 @@ gulp.task('usemin', function() {
 });	
 
 var buildDeps = [
-  'clean',
+  //'clean',
   //'coffeeServer',
   //'coffeeClient',
   //'coffeeMain',
