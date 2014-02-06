@@ -4,7 +4,7 @@ module.exports = function() {
   switch (process.env.NODE_ENV) {
     case 'production':
       return {
-        staticDir: dir
+        staticDir: "" + dir + "/dist"
       };
     default:
       return {
