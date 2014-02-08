@@ -17,12 +17,10 @@
   },
   "homepage": "https://github.com/jjt/LUXTRUBUK",
   "dependencies": {
-    "express": "~3.4.7",
-    "pg": "~2.11.0",
-    "bluebird": "~1.0.1",
-    "gulp": "~3.5.2"
+    "express": "~3.4.7"
   },
   "devDependencies": {
+    "gulp": "~3.5.2",
     "gulp-util": "~2.2.9",
     "gulp-coffee": "~1.2.5",
     "gulp-load-tasks": "~0.1.1",

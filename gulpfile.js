@@ -126,7 +126,8 @@ gulp.task('clean', function() {
 });	
 
 gulp.task('copy', function() {
-  return gulp.src(['./client/public/**/*', './server/**/*.js'])  
+  return gulp.src(['./client/public/**/*', './server/**/*.js', './Procfile',
+    './package.json'])  
     .pipe(gulp.dest('./dist'));
 });	
 
