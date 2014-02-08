@@ -3,3 +3,4 @@ bower_components
 client/public/data/
 dist
 *gameHashes.*
+client/public/script/luxtrubuk.js

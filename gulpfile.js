@@ -121,7 +121,7 @@ gulp.task('default', ['development']);
 // BUILD
 // ----------------------------------------------------------------------------
 gulp.task('clean', function() {
-  return gulp.src('./dist', {read: false, force: true})
+  return gulp.src('./dist/*', {read: false, force: true})
     .pipe(clean());
 });	
 
