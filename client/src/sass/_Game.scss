@@ -63,10 +63,10 @@
 }
 
 .Clue__value {
-  font-size:2.6rem;
+  font-size: $alpha;
   display: inline-block;
   &.fourDigit {
-    font-size:2.2rem;
+    font-size:$beta;
   }
 }
 
@@ -95,17 +95,17 @@
 
 .ClueDetail__title {
   @extend %titleStyle;
-  font-size:1.6rem;
+  font-size:$gamma;
   margin-top:1.5rem;
   margin-bottom:1.5rem;
 }
 
 
 .ClueDetail__answer{
-  font-size:2.2rem;
+  font-size:$beta;
 }
 .ClueDetail__clue {
-  font-size:1.8em;
+  font-size:$gamma;
 }
 
 .ClueDetail__answerHolder {
@@ -126,7 +126,7 @@
 
 .ClueDetail__showAnswer {
   @extend %btn;
-  font-size:1.6rem;
+  font-size:$gamma;
 }
 
 
@@ -135,7 +135,7 @@
   display:block;
   margin:0 0.8rem;
   @extend %btn;
-  font-size:1.6rem;
+  font-size:$gamma;
 }
 
 .Controls {
@@ -231,13 +231,13 @@
   a {
     display:inline-block;
     margin:0 auto;
-    font-size:1.2rem;
+    font-size:$delta;
     @extend %btn;
   }
 }
 
 %AnswerBtn {
-  font-size:1.6rem;
+  font-size:$gamma;
   display:inline-block;
   color:$yellow;
 }

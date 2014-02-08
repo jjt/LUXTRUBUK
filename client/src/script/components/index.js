@@ -1,9 +1,10 @@
 /** @jsx React.DOM */
 Zepto(function(){
-  var Luxtrubuk = require('./luxtrubuk.js');
+  //var Luxtrubuk = require('./luxtrubuk.js');
+  var Game = require('./Game.js');
   var HomePage = require('./HomePage.js');
   var $app = $('#app');
-  var gL = gameLib = require('../../../lib/game.js')();
+  var gL = require('../../../lib/game.js')();
 
   // Routes
   var home = function() {
@@ -29,7 +30,7 @@ Zepto(function(){
       gameObj.start();
       //gameObj.round(2);
       React.renderComponent(
-        Luxtrubuk( {game:gameObj}),
+        Game( {game:gameObj}),
         $app[0]
       );
     });

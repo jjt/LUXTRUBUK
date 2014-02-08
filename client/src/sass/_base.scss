@@ -4,6 +4,8 @@
 }
 html {
   height: 100%;
+  font-size:16px;
+  line-height:1.2;
 }
 
 body {
@@ -18,7 +20,7 @@ a {
 }
 
 
-h1,h2,h3,h4 {
+h1,h2,h3,h4,h5 {
   font-weight:normal;
 }
 
@@ -26,12 +28,17 @@ h1,h2,h3 {
   color:darken($bodyColor,10%);
 }
 
+
 $alpha: 2.6rem;
-$beta: 2.2rem;
-$gamma: 1.6rem;
+$beta: 2.15rem;
+$gamma: 1.7rem;
 $delta: 1.25rem;
 $epsilon: 1rem;
-$zeta: 0.75rem;
+$zeta: 0.85rem;
+$eta: 0.73rem;
+
+$omega: 3.3rem;
+$psi: 4.1rem;
 
 .alpha {font-size: $alpha;}
 .beta {font-size: $beta;}
@@ -39,3 +46,13 @@ $zeta: 0.75rem;
 .delta {font-size: $delta;}
 .epsilon {font-size: $epsilon;}
 .zeta {font-size: $zeta;}
+
+.omega {font-size: $omega;}
+.psi {font-size: $psi;}
+
+
+h1 {font-size: $alpha;}
+h2 {font-size: $beta;}
+h3 {font-size: $gamma;}
+h4 {font-size: $delta;}
+h5 {font-size: $epsilon;}

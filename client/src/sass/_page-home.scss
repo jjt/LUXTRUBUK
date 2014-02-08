@@ -3,15 +3,19 @@
 }
 
 .flexGrid {
-  @extend %flexbox;
-  margin-left:-1.5rem;
 }
 
-.homeStep {
+.HowToPlay {
+  @extend %flexbox;
+  margin-left:-1.5rem;
+  margin-bottom:1.5rem; 
+}
+
+.HowToPlay__Step {
   @include flex(1);
   margin-left:1.5rem;
   p {
-    @extend .delta;
+    @extend .epsilon;
     padding:0 1rem;
     text-align:center;
     margin:0;
@@ -19,6 +23,7 @@
   img {
     width:100%;
     border:1px solid $headerColor;
+    margin-bottom:0.6rem;
   }
 }
 
@@ -35,15 +40,18 @@
 }
 
 
-.HomePage h1 {
-  @extend .beta;
+.HomePage h2 {
   text-align:center;
-  margin-bottom:3rem;
+  margin-bottom:1.5rem;
 }
 
-.HomePage h2 {
-  text-align: center;
-  text-transform: uppercase;
+.HomePage h3 {
+  text-align:center;
+}
+
+.HomePage__Blurb {
+  text-transform: normal;
+
 }
 
 

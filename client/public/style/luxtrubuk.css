@@ -324,7 +324,7 @@ table {
   border-collapse: collapse;
   border-spacing: 0; }
 
-.flexGrid, .GameGrid, .Category__title, .Clue, .ClueDetail__answerHolder, .Controls, .PlayerBar {
+.HowToPlay, .GameGrid, .Category__title, .Clue, .ClueDetail__answerHolder, .Controls, .PlayerBar {
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-flex;
@@ -372,7 +372,9 @@ table {
   color: white !important; }
 
 html {
-  height: 100%; }
+  height: 100%;
+  font-size: 16px;
+  line-height: 1.2; }
 
 body {
   background: #124566;
@@ -383,29 +385,50 @@ a {
   color: #ffe000;
   text-decoration: none; }
 
-h1, h2, h3, h4 {
+h1, h2, h3, h4, h5 {
   font-weight: normal; }
 
 h1, h2, h3 {
   color: #86aabe; }
 
-.alpha {
+.alpha, .siteHeader h1 {
   font-size: 2.6rem; }
 
-.beta, .siteHeader h1, .HomePage h1 {
-  font-size: 2.2rem; }
+.beta {
+  font-size: 2.15rem; }
 
 .gamma {
-  font-size: 1.6rem; }
+  font-size: 1.7rem; }
 
-.delta, .homeStep p {
+.delta {
   font-size: 1.25rem; }
 
-.epsilon {
+.epsilon, .HowToPlay__Step p {
   font-size: 1rem; }
 
 .zeta {
-  font-size: 0.75rem; }
+  font-size: 0.85rem; }
+
+.omega {
+  font-size: 3.3rem; }
+
+.psi {
+  font-size: 4.1rem; }
+
+h1 {
+  font-size: 2.6rem; }
+
+h2 {
+  font-size: 2.15rem; }
+
+h3 {
+  font-size: 1.7rem; }
+
+h4 {
+  font-size: 1.25rem; }
+
+h5 {
+  font-size: 1rem; }
 
 .Category__title, .Clue, .ClueDetail__answerHolder, .PlayerBar {
   justify-content: center;
@@ -435,7 +458,8 @@ h1, h2, h3 {
 footer {
   padding-top: 1.5rem; }
   footer p {
-    font-size: 0.75rem;
+    font-size: 0.73rem;
+    line-height: 1.5;
     text-align: center;
     color: #7a9eb0; }
 
@@ -483,10 +507,12 @@ footer {
 .loading {
   text-align: center; }
 
-.flexGrid {
-  margin-left: -1.5rem; }
 
-.homeStep {
+.HowToPlay {
+  margin-left: -1.5rem;
+  margin-bottom: 1.5rem; }
+
+.HowToPlay__Step {
   -webkit-box-flex: 1;
   -webkit-flex: 1;
   -moz-box-flex: 1;
@@ -494,16 +520,17 @@ footer {
   -ms-flex: 1;
   flex: 1;
   margin-left: 1.5rem; }
-  .homeStep p {
+  .HowToPlay__Step p {
     padding: 0 1rem;
     text-align: center;
     margin: 0; }
-  .homeStep img {
+  .HowToPlay__Step img {
     width: 100%;
-    border: 1px solid #7a9eb0; }
+    border: 1px solid #7a9eb0;
+    margin-bottom: 0.6rem; }
 
 .newGame {
-  font-size: 1.6rem;
+  font-size: 1.7rem;
   margin: 0 auto; }
 
 .newGameRow {
@@ -511,13 +538,15 @@ footer {
   padding-bottom: 1.5rem;
   text-align: center; }
 
-.HomePage h1 {
-  text-align: center;
-  margin-bottom: 3rem; }
-
 .HomePage h2 {
   text-align: center;
-  text-transform: uppercase; }
+  margin-bottom: 1.5rem; }
+
+.HomePage h3 {
+  text-align: center; }
+
+.HomePage__Blurb {
+  text-transform: normal; }
 
 .textCenter {
   text-align: center; }
@@ -566,7 +595,7 @@ footer {
   font-size: 2.6rem;
   display: inline-block; }
   .Clue__value.fourDigit {
-    font-size: 2.2rem; }
+    font-size: 2.15rem; }
 
 .Clue--picked {
   color: #53788b; }
@@ -589,15 +618,15 @@ footer {
     display: none; }
 
 .ClueDetail__title {
-  font-size: 1.6rem;
+  font-size: 1.7rem;
   margin-top: 1.5rem;
   margin-bottom: 1.5rem; }
 
 .ClueDetail__answer {
-  font-size: 2.2rem; }
+  font-size: 2.15rem; }
 
 .ClueDetail__clue {
-  font-size: 1.8em; }
+  font-size: 1.7rem; }
 
 .ClueDetail__answerHolder {
   height: 10rem; }
@@ -611,12 +640,12 @@ footer {
     display: block; }
 
 .ClueDetail__showAnswer {
-  font-size: 1.6rem; }
+  font-size: 1.7rem; }
 
 .ClueDetail__done {
   display: block;
   margin: 0 0.8rem;
-  font-size: 1.6rem; }
+  font-size: 1.7rem; }
 
 .Controls {
   position: absolute;
@@ -659,14 +688,14 @@ footer {
 .PlayerDisplay__score {
   margin: 0 0 0.8rem;
   color: rgba(255, 255, 255, 0.9);
-  font-size: 1.6rem; }
+  font-size: 1.7rem; }
   .red .PlayerDisplay__score {
     color: #dc322f; }
 
 .PlayerBar--gameover .PlayerDisplay {
-  font-size: 1.6rem; }
+  font-size: 1.7rem; }
 .PlayerBar--gameover .PlayerDisplay__score {
-  font-size: 2.2rem; }
+  font-size: 2.15rem; }
 .PlayerBar--gameover .PlayerDisplay--round {
   display: none; }
 
@@ -674,21 +703,21 @@ footer {
   padding: 0 1rem; }
   .Control__group button, .Control__group input {
     width: 100%;
-    font-size: 1.6rem;
+    font-size: 1.7rem;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box; }
   .Control__group input {
-    font-size: 1.6rem;
+    font-size: 1.7rem;
     padding: 0.5rem;
     text-align: center; }
   .Control__group a {
     display: inline-block;
     margin: 0 auto;
-    font-size: 1.2rem; }
+    font-size: 1.25rem; }
 
 .AnswerBtn__wrong, .AnswerBtn__right {
-  font-size: 1.6rem;
+  font-size: 1.7rem;
   display: inline-block;
   color: #ffe000; }
 
