@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
 Zepto(function(){
   var Luxtrubuk = require('./luxtrubuk.js');
-  var HomePage = require('./homePage.js');
+  var HomePage = require('./HomePage.js');
   var $app = $('#app');
   var gL = gameLib = require('../../../lib/game.js')();
 

@@ -1,6 +1,27 @@
 .loading {
   text-align: center;
 }
+
+.flexGrid {
+  @extend %flexbox;
+  margin-left:-1.5rem;
+}
+
+.homeStep {
+  @include flex(1);
+  margin-left:1.5rem;
+  p {
+    @extend .delta;
+    padding:0 1rem;
+    text-align:center;
+    margin:0;
+  }
+  img {
+    width:100%;
+    border:1px solid $headerColor;
+  }
+}
+
 .newGame {
   @extend %btn;
   font-size:$gamma;
@@ -8,11 +29,22 @@
 }
 
 .newGameRow {
-  padding-top:3rem;
-  padding-bottom:3rem;
+  padding-top:1.5rem;
+  padding-bottom:1.5rem;
   text-align: center;
 }
 
-.HomePage p {
-  @extend .delta;
+
+.HomePage h1 {
+  @extend .beta;
+  text-align:center;
+  margin-bottom:3rem;
 }
+
+.HomePage h2 {
+  text-align: center;
+  text-transform: uppercase;
+}
+
+
+

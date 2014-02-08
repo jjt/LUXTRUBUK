@@ -1,19 +1,15 @@
 var runSequence = require('run-sequence');
 var browserify = require('gulp-browserify');
-var livereload = require('gulp-livereload');
 var nodemon = require('gulp-nodemon');
 var coffee = require('gulp-coffee');
-var concat = require('gulp-concat');
 var rename = require('gulp-rename');
 var server = require('tiny-lr')();
-var uglify = require('gulp-uglify');
 var usemin = require('gulp-usemin');
 var chalk = require('chalk');
 var clean = require('gulp-clean');
 var gutil = require('gulp-util');
 var mocha = require('gulp-mocha');
 var react = require('gulp-react');
-var rename = require('gulp-rename');
 var gulp = require('gulp');
 var sass = require('gulp-sass');
 var _ = require('lodash');
@@ -150,4 +146,3 @@ gulp.task('build', function(cb) {
     cb
   );  
 });
-

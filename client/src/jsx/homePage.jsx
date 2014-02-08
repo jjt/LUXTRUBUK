@@ -3,14 +3,23 @@ HomePage = React.createClass({
   render: function(){
     return(
       <div className="HomePage">
-        <h1>LUXTRUBUK lets good pals simulate JEOPARDY!&trade; games locally in a
+        <h1>LUXTRUBUK helps pals to simulate JEOPARDY!&trade; games locally in a
           modern browser.
         </h1>
-        <p>
-          There's no buzzing in to answer, so the first player or players to yell
-          out the correct answer get points. If you yell out the wrong answer,
-          you'll be deducted points. Be friends about the whole thing.
-        </p> 
+        <div className="flexGrid">
+          <div className="homeStep">
+            <img src="/img/how-to-play-1.png"/>
+            <p>Pick a space from the gameboard to view a clue, and get ready to...</p>
+          </div>
+          <div className="homeStep">
+            <img src="/img/how-to-play-2.png"/>
+            <p>Yell out the correct answer before one of your pals does</p>
+          </div>
+          <div className="homeStep">
+            <img src="/img/how-to-play-3.png"/>
+            <p>Score any player who yelled out an answer &mdash; have fun, pals!</p>
+          </div>
+        </div>
         <div className="newGameRow">
           <a href="#/game/new" data-route className="newGame">New Game</a>
         </div>

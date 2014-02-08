@@ -324,7 +324,7 @@ table {
   border-collapse: collapse;
   border-spacing: 0; }
 
-.GameGrid, .Category__title, .Clue, .ClueDetail__answerHolder, .Controls, .PlayerBar {
+.flexGrid, .GameGrid, .Category__title, .Clue, .ClueDetail__answerHolder, .Controls, .PlayerBar {
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-flex;
@@ -392,13 +392,13 @@ h1, h2, h3 {
 .alpha {
   font-size: 2.6rem; }
 
-.beta {
+.beta, .siteHeader h1, .HomePage h1 {
   font-size: 2.2rem; }
 
 .gamma {
   font-size: 1.6rem; }
 
-.delta, .HomePage p {
+.delta, .homeStep p {
   font-size: 1.25rem; }
 
 .epsilon {
@@ -426,8 +426,7 @@ h1, h2, h3 {
     background: #124566;
     display: inline-block; }
   .siteHeader h1 {
-    margin: 0.8em 0 0.4em;
-    font-size: 2.6rem;
+    margin: 0.8em 0 0.6em;
     font-weight: normal; }
     .siteHeader h1 a {
       color: #ffe000;
@@ -484,15 +483,41 @@ footer {
 .loading {
   text-align: center; }
 
+.flexGrid {
+  margin-left: -1.5rem; }
+
+.homeStep {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  -moz-box-flex: 1;
+  -moz-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  margin-left: 1.5rem; }
+  .homeStep p {
+    padding: 0 1rem;
+    text-align: center;
+    margin: 0; }
+  .homeStep img {
+    width: 100%;
+    border: 1px solid #7a9eb0; }
+
 .newGame {
   font-size: 1.6rem;
   margin: 0 auto; }
 
 .newGameRow {
-  padding-top: 3rem;
-  padding-bottom: 3rem;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
   text-align: center; }
 
+.HomePage h1 {
+  text-align: center;
+  margin-bottom: 3rem; }
+
+.HomePage h2 {
+  text-align: center;
+  text-transform: uppercase; }
 
 .textCenter {
   text-align: center; }
