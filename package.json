@@ -1,0 +1,52 @@
+{
+  "name": "LUXTRUBUK",
+  "version": "0.0.0",
+  "description": "LUXTRUBUK lets good buds simulate Jeopardy",
+  "main": "luxtrubuk.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jjt/LUXTRUBUK.git"
+  },
+  "author": "Jason Trill <jason@jasontrill.com> (http://jjt.io/)",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/jjt/LUXTRUBUK/issues"
+  },
+  "homepage": "https://github.com/jjt/LUXTRUBUK",
+  "dependencies": {
+    "express": "~3.4.7",
+    "lodash": "~2.4.1"
+  },
+  "devDependencies": {
+    "gulp": "~3.4.1",
+    "gulp-util": "~2.2.9",
+    "gulp-coffee": "~1.2.5",
+    "gulp-load-tasks": "~0.1.1",
+    "gulp-browserify": "~0.2.5",
+    "gulp-nodemon": "~0.1.1",
+    "gulp-jade": "~0.3.0",
+    "gulp-react": "~0.1.0",
+    "gulp-concat": "~2.1.7",
+    "lodash": "~2.4.1",
+    "chalk": "~0.4.0",
+    "node-bourbon": "~1.0.0",
+    "gulp-sass": "~0.4.0",
+    "gulp-mocha": "~0.3.0",
+    "should": "~3.0.1",
+    "chai": "~1.8.1",
+    "chai-fs": "0.0.3",
+    "prettyjson": "~0.10.0",
+    "gulp-livereload": "~0.2.0",
+    "tiny-lr": "0.0.5",
+    "async": "~0.2.10",
+    "bluebird": "~1.0.1",
+    "gulp-uglify": "~0.2.0",
+    "gulp-rename": "~0.2.2",
+    "gulp-clean": "~0.2.4",
+    "gulp-usemin": "~0.1.3",
+    "run-sequence": "~0.3.3"
+  }
+}
