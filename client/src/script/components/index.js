@@ -12,12 +12,12 @@ Zepto(function(){
   }
 
   var newGame = function() {
-    $.ajax({
-      url: '/api/game/randomHash?' + Math.random(),
-      success: function(data){
-        router("#/game/" + data, 'Game #' +data);
-      }
-    }); 
+    host = window.location.hostname.replace('luxtrubuk','luxtrubukapi');
+    url = 'http://' + host + '/api/game/randomHash?callback=?' 
+    $.getJSON(url, function(data){
+      router("#/game/" + data, 'Game #' +data);
+    });
+       
   }
 
   var gameRoute = function(gamehash) {

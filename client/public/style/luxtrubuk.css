@@ -121,8 +121,8 @@ hr {
  * Addresses styling not present in IE 8/9.
  */
 mark {
-  background: yellow;
-  color: black; }
+  background: #ff0;
+  color: #000; }
 
 /**
  * Addresses margins set differently in IE 6/7.
@@ -199,7 +199,7 @@ figure {
  * Define consistent border, margin, and padding.
  */
 fieldset {
-  border: 1px solid silver;
+  border: 1px solid #c0c0c0;
   margin: 0 2px;
   padding: 0.35em 0.625em 0.75em; }
 
@@ -378,7 +378,7 @@ html {
 
 body {
   background: #124566;
-  color: #a7c1d0;
+  color: #a8c0cf;
   height: 100%; }
 
 a {
@@ -389,7 +389,7 @@ h1, h2, h3, h4, h5 {
   font-weight: normal; }
 
 h1, h2, h3 {
-  color: #86aabe; }
+  color: #87a8bd; }
 
 .alpha, .siteHeader h1 {
   font-size: 2.6rem; }
@@ -461,12 +461,12 @@ footer {
     font-size: 0.73rem;
     line-height: 1.5;
     text-align: center;
-    color: #7a9eb0; }
+    color: #7c9baf; }
 
 .btn, .btn-success, .btn-error, .newGame, .ClueDetail__showAnswer, .ClueDetail__done, .Control__group a, .AnswerBtn__wrong, .AnswerBtn__right {
   padding: 0.4em 1em;
   display: inline-block;
-  border: 1px solid #7a9eb0;
+  border: 1px solid #7c9baf;
   background: none;
   color: #ffe000;
   cursor: pointer;
@@ -497,12 +497,12 @@ footer {
 
 .btn-error, .AnswerBtn__wrong.selected {
   color: rgba(255, 255, 255, 0.8);
-  background: #dc322f;
-  border: 1px solid #dc322f; }
+  background: #DC322F;
+  border: 1px solid #DC322F; }
   .btn-error:hover {
     color: rgba(255, 255, 255, 0.8);
-    background: #dc322f;
-    border: 1px solid #dc322f; }
+    background: #DC322F;
+    border: 1px solid #DC322F; }
 
 .loading {
   text-align: center; }
@@ -526,7 +526,7 @@ footer {
     margin: 0; }
   .HowToPlay__Step img {
     width: 100%;
-    border: 1px solid #7a9eb0;
+    border: 1px solid #7c9baf;
     margin-bottom: 0.6rem; }
 
 .newGame {
@@ -577,7 +577,7 @@ footer {
   flex: 1; }
 
 .Category__title, .ClueDetail__title, .PlayerDisplay .title {
-  color: #7a9eb0; }
+  color: #7c9baf; }
 
 .Category__title {
   word-wrap: break-word; }
@@ -598,9 +598,9 @@ footer {
     font-size: 2.15rem; }
 
 .Clue--picked {
-  color: #53788b; }
+  color: #54758a; }
   .Clue--picked:hover {
-    color: #53788b;
+    color: #54758a;
     background: none;
     cursor: default; }
 
@@ -679,7 +679,7 @@ footer {
     margin-bottom: 0;
     text-transform: uppercase; }
   .PlayerDisplay.red h4 {
-    color: #dc322f; }
+    color: #DC322F; }
 
 
 .PlayerDisplay--winner .title {
@@ -690,7 +690,7 @@ footer {
   color: rgba(255, 255, 255, 0.9);
   font-size: 1.7rem; }
   .red .PlayerDisplay__score {
-    color: #dc322f; }
+    color: #DC322F; }
 
 .PlayerBar--gameover .PlayerDisplay {
   font-size: 1.7rem; }

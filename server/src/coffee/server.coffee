@@ -7,7 +7,9 @@ dir = process.cwd()
 app = express()
 
 app.get '/api/game/randomHash', (req, res)->
-  res.send _.sample require('./lib/gameHashes')
+  cb = req.param 'callback'
+  hash = _.sample require('./lib/gameHashes')
+  res.send "#{cb}(\"#{hash}\")"
 
 app.configure ()->
   app.use express.static(config.staticDir)

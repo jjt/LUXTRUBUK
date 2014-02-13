@@ -12,11 +12,16 @@ Zepto(function(){
   }
 
   var newGame = function() {
-    host = window.location.hostname.replace('luxtrubuk','luxtrubukapi');
-    url = 'http://' + host + '/api/game/randomHash?callback=?' 
-    $.getJSON(url, function(data){
+    //$.ajax({
+      //url: 'http://luxtrubukapi.loc/api/game/randomHash?callback=callback',
+      //jsonp: 'callback',
+      //success: function(data){
+        //router("#/game/" + data, 'Game #' +data);
+      //}
+    //}); 
+    url = 'http://luxtrubukapi.loc/api/game/randomHash?callback=?' 
+    $.getJSON url, (data) ->
       router("#/game/" + data, 'Game #' +data);
-    });
        
   }
 

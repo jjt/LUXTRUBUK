@@ -11,7 +11,10 @@ dir = process.cwd();
 app = express();
 
 app.get('/api/game/randomHash', function(req, res) {
-  return res.send(_.sample(require('./lib/gameHashes')));
+  var cb, hash;
+  cb = req.param('callback');
+  hash = _.sample(require('./lib/gameHashes'));
+  return res.send("" + cb + "(\"" + hash + "\")");
 });
 
 app.configure(function() {

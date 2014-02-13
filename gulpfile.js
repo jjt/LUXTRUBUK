@@ -1,15 +1,19 @@
 var runSequence = require('run-sequence');
 var browserify = require('gulp-browserify');
+var livereload = require('gulp-livereload');
+var minifyHtml = require('gulp-minify-html');
+var minifyCss = require('gulp-minify-css');
 var nodemon = require('gulp-nodemon');
 var coffee = require('gulp-coffee');
 var rename = require('gulp-rename');
-var server = require('tiny-lr')();
+var uglify = require('gulp-uglify');
 var usemin = require('gulp-usemin');
 var chalk = require('chalk');
 var clean = require('gulp-clean');
 var gutil = require('gulp-util');
 var mocha = require('gulp-mocha');
 var react = require('gulp-react');
+var watch = require('gulp-watch');
 var gulp = require('gulp');
 var sass = require('gulp-sass');
 var _ = require('lodash');
@@ -54,7 +58,8 @@ gulp.task('browserify', function () {
   return gulp.src('client/src/script/components/index.js') 
     .pipe(browserify({debug: true}).on('error', error))
     .pipe(rename('luxtrubuk.js'))
-    .pipe(gulp.dest('client/public/script'));
+    .pipe(gulp.dest('client/public/script'))
+    .pipe(livereload());
 });
 
 
@@ -66,7 +71,8 @@ gulp.task('sass', function() {
       sass({includePaths: ['client/src/sass', 'client/public/bower_components']})
         .on('error', error)
     )
-    .pipe(gulp.dest('client/public/style'));
+    .pipe(gulp.dest('client/public/style'))
+    .pipe(livereload());
 });	
 
 
@@ -75,15 +81,9 @@ gulp.task('sass', function() {
 gulp.task('server', function () {
   nodemon({
     script: 'server/server.js',
-    options: '-e html,js -i client,node_modules,dist'
+    options: '-e html,js -i \'client/**/*,node_modules/**/*,dist/**/*\''
   }).on('error', error);
 });
-
-gulp.task('lrServe', function() {
-  server.listen(35729, function(err){
-    if(err) return console.log(err);
-  });
-});	
 
 
 // TESTING
@@ -102,18 +102,22 @@ var devTasks = [
   'coffeeClient',
   'sass',
   'server',
-  'react',
-  'lrServe'
+  'react'
 ];
 
 gulp.task('development', devTasks, function() {
+  var server = livereload();
   gulp.watch('client/src/sass/**/*.scss', ['sass']);
   gulp.watch('client/src/coffee/**/*.coffee', ['coffeeClient']); 
   gulp.watch('server/src/coffee/**/*.coffee', ['coffeeServer']); 
   gulp.watch('client/src/jsx/**/*.jsx', ['react']); 
   gulp.watch(['client/src/script/**/*.js', 'client/lib/**/*.js'],
     ['browserify']); 
-    
+  gulp.watch(['client/public/index.html', 'client/public/style/**/*.css',
+    'client/public/script/**/*.js'], function (evt) {
+    server.changed(evt.path);
+  }); 
+  return server;    
 });	
 gulp.task('default', ['development']);
 
@@ -133,7 +137,12 @@ gulp.task('copy', function() {
 
 gulp.task('usemin', function() {
   return gulp.src('./client/public/index.html') 
-    .pipe(usemin())
+    .pipe(usemin({
+      rev: true,
+      cssmin: minifyCss(),
+      htmlmin: minifyHtml(),
+      jsmin: uglify()
+    }))
     .pipe(gulp.dest('./dist'));
 });	
 
