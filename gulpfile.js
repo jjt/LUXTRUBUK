@@ -1,28 +1,29 @@
+//var browserify = require('gulp-browserify');
+//var livereload = require('gulp-livereload');
+//var minifyHtml = require('gulp-minify-html');
+//var minifyCss = require('gulp-minify-css');
+//var nodemon = require('gulp-nodemon');
+//var coffee = require('gulp-coffee');
+//var rename = require('gulp-rename');
+//var uglify = require('gulp-uglify');
+//var usemin = require('gulp-usemin');
+//var clean = require('gulp-clean');
+//var gutil = require('gulp-util');
+//var mocha = require('gulp-mocha');
+//var react = require('gulp-react');
+//var watch = require('gulp-watch');
+//var sass = require('gulp-sass');
+
 var runSequence = require('run-sequence');
-var browserify = require('gulp-browserify');
-var livereload = require('gulp-livereload');
-var minifyHtml = require('gulp-minify-html');
-var minifyCss = require('gulp-minify-css');
-var nodemon = require('gulp-nodemon');
-var coffee = require('gulp-coffee');
-var rename = require('gulp-rename');
-var uglify = require('gulp-uglify');
-var usemin = require('gulp-usemin');
-var chalk = require('chalk');
-var clean = require('gulp-clean');
-var gutil = require('gulp-util');
-var mocha = require('gulp-mocha');
-var react = require('gulp-react');
-var watch = require('gulp-watch');
 var gulp = require('gulp');
-var sass = require('gulp-sass');
-var _ = require('lodash');
+var chalk = require('chalk');
+var gp = require("gulp-load-plugins")();
 
 
 // UTILITY FUNCTIONS
 // ----------------------------------------------------------------------------
 var error = function(err) {
-  gutil.log(chalk.red.bold(err));
+  gp.util.log(chalk.red.bold(err));
   return this;
 }
 
@@ -32,7 +33,7 @@ var error = function(err) {
 var coffeeTaskFn = function(src, dest) {
   return function() {
     return gulp.src(src)
-      .pipe(coffee({bare:true}).on('error', error))
+      .pipe(gp.coffee({bare:true}).on('error', error))
       .pipe(gulp.dest(dest));
   }
 }
@@ -47,7 +48,7 @@ gulp.task('coffeeServer', coffeeTaskFn('server/src/coffee/**/*.coffee',
 // ----------------------------------------------------------------------------
 gulp.task('react', function() {
   return gulp.src('client/src/jsx/**/*.jsx')
-    .pipe(react().on('error', error))
+    .pipe(gp.react().on('error', error))
     .pipe(gulp.dest('client/src/script/components'));
 });	
 
@@ -56,10 +57,10 @@ gulp.task('react', function() {
 // ----------------------------------------------------------------------------
 gulp.task('browserify', function () {
   return gulp.src('client/src/script/components/index.js') 
-    .pipe(browserify({debug: true}).on('error', error))
-    .pipe(rename('luxtrubuk.js'))
+    .pipe(gp.browserify({debug: true}).on('error', error))
+    .pipe(gp.rename('luxtrubuk.js'))
     .pipe(gulp.dest('client/public/script'))
-    .pipe(livereload());
+    .pipe(gp.livereload());
 });
 
 
@@ -68,18 +69,18 @@ gulp.task('browserify', function () {
 gulp.task('sass', function() {
   gulp.src('client/src/sass/**/*.scss')
     .pipe(
-      sass({includePaths: ['client/src/sass', 'client/public/bower_components']})
+      gp.sass({includePaths: ['client/src/sass', 'client/public/bower_components']})
         .on('error', error)
     )
     .pipe(gulp.dest('client/public/style'))
-    .pipe(livereload());
+    .pipe(gp.livereload());
 });	
 
 
 // SERVER
 // ----------------------------------------------------------------------------
 gulp.task('server', function () {
-  nodemon({
+  gp.nodemon({
     script: 'server/server.js',
     options: '-e html,js -i \'client/**/*,node_modules/**/*,dist/**/*\''
   }).on('error', error);
@@ -90,7 +91,7 @@ gulp.task('server', function () {
 // ----------------------------------------------------------------------------
 gulp.task('testClient', function() {
   gulp.src('client/test/spec/*.js')
-    .pipe(mocha({reporter: 'dot'}).on('error', error));
+    .pipe(gp.mocha({reporter: 'dot'}).on('error', error));
 });	
 
 
@@ -106,7 +107,7 @@ var devTasks = [
 ];
 
 gulp.task('development', devTasks, function() {
-  var server = livereload();
+  var server = gp.livereload();
   gulp.watch('client/src/sass/**/*.scss', ['sass']);
   gulp.watch('client/src/coffee/**/*.coffee', ['coffeeClient']); 
   gulp.watch('server/src/coffee/**/*.coffee', ['coffeeServer']); 
@@ -126,7 +127,7 @@ gulp.task('default', ['development']);
 // ----------------------------------------------------------------------------
 gulp.task('clean', function() {
   return gulp.src('./dist/*', {read: false, force: true})
-    .pipe(clean());
+    .pipe(gp.clean());
 });	
 
 gulp.task('copy', function() {
@@ -137,11 +138,11 @@ gulp.task('copy', function() {
 
 gulp.task('usemin', function() {
   return gulp.src('./client/public/index.html') 
-    .pipe(usemin({
+    .pipe(gp.usemin({
       rev: true,
-      cssmin: minifyCss(),
-      htmlmin: minifyHtml(),
-      jsmin: uglify()
+      cssmin: gp.minifyCss(),
+      htmlmin: gp.minifyHtml(),
+      jsmin: gp.uglify()
     }))
     .pipe(gulp.dest('./dist'));
 });	
