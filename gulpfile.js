@@ -1,23 +1,8 @@
-//var browserify = require('gulp-browserify');
-//var livereload = require('gulp-livereload');
-//var minifyHtml = require('gulp-minify-html');
-//var minifyCss = require('gulp-minify-css');
-//var nodemon = require('gulp-nodemon');
-//var coffee = require('gulp-coffee');
-//var rename = require('gulp-rename');
-//var uglify = require('gulp-uglify');
-//var usemin = require('gulp-usemin');
-//var clean = require('gulp-clean');
-//var gutil = require('gulp-util');
-//var mocha = require('gulp-mocha');
-//var react = require('gulp-react');
-//var watch = require('gulp-watch');
-//var sass = require('gulp-sass');
+var gp = require("gulp-load-plugins")();
 
 var runSequence = require('run-sequence');
 var gulp = require('gulp');
 var chalk = require('chalk');
-var gp = require("gulp-load-plugins")();
 
 
 // UTILITY FUNCTIONS
